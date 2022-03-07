@@ -5,23 +5,9 @@ const authContext = createContext()
 
 export const AuthProvider = ( {children} ) => {
 
-    const auth = useProviderAuth()
+    const [user, setUser] = useState(true)
 
-    return (
-        <authContext.Provider value={auth}>
-            {children}
-        </authContext.Provider>
-    )
-}
-
-export const useAuth = () => {
-    return useContext(authContext)
-}
-
-
-function useProviderAuth () {
-
-    const [user, setUser] = useState(null)
+    console.log(user)
 
     const logout = async () => {
         const { error } = await supabase.auth.signOut()
@@ -52,13 +38,17 @@ function useProviderAuth () {
 
     }, [])
 
-    return {
-        user,
-        logout
-    }
-
-
+    return (
+        <authContext.Provider value={{user, logout}}>
+            {children}
+        </authContext.Provider>
+    )
 }
+
+export const useAuth = () => {
+    return useContext(authContext)
+}
+
 
 
 

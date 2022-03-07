@@ -45,7 +45,7 @@ const Categoty = () => {
 
                 <div className="container mx-auto">
                     <div className="flex flex-col">
-                    <Link to={'/create-category'}>
+                    <Link to={'/adicionar-categoria'}>
                         <button className="my-10 btn btn-block sm:btn-wide btn-sm">Add Categoria</button> 
                     </Link>
                         <div className="w-full">

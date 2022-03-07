@@ -21,7 +21,7 @@ const MainRoutes = () => {
                 <Route path={'/'} element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
                 <Route path={'/produtos'} element={<ProtectedRoute> <Products /> </ProtectedRoute>} />
                 <Route path={'/categorias'} element={<ProtectedRoute> <Categoty /> </ProtectedRoute>} />
-                <Route path={'/create-category'} element={<ProtectedRoute> <CreateCategory /> </ProtectedRoute>} />
+                <Route path={'/adicionar-categoria'} element={<ProtectedRoute> <CreateCategory /> </ProtectedRoute>} />
             </Routes>        
         </AuthProvider>
     )
