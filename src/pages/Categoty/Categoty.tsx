@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { supabase } from "services/supabase"
 import { useAuth } from "../../context/auth"
 import { useToasts } from 'react-toast-notifications';
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 type Category = {
     created_at: Date
@@ -15,7 +15,7 @@ type Category = {
 const Categoty = () => {
     
     const { addToast } = useToasts();
-
+ 
     const auth = useAuth()
 
     const [categories, setCategories] = useState<Category[] | null>(null)
@@ -28,14 +28,27 @@ const Categoty = () => {
         
         if(error){
             addToast(error.message, { appearance: 'error',  autoDismiss: true });  
-          }
+        }
           
           setCategories(data)
           setLoading(true)  
     }
 
+    const removeCategory = async (id: number) => {
+        const { data, error } = await supabase.from('category').delete().match({'id': id})
+
+        const dataDelete = categories?.filter(item => item.id !== data?.[0].id)
+        setCategories(dataDelete ?? categories)
+
+        if(error){
+            addToast(error.message, { appearance: 'error',  autoDismiss: true });  
+        }
+
+    }
+
     useEffect(() => {
-        getCategories()
+            getCategories()
+    
         // eslint-disable-next-line react-hooks/exhaustive-deps
 
     }, [])
@@ -46,7 +59,7 @@ const Categoty = () => {
                 <div className="container mx-auto">
                     <div className="flex flex-col">
                     <Link to={'/adicionar-categoria'}>
-                        <button className="my-10 btn btn-block sm:btn-wide btn-sm">Add Categoria</button> 
+                        <button className="my-10 btn btn-block sm:btn-wide btn-sm">Nova Categoria</button> 
                     </Link>
                         <div className="w-full">
                             <div className="flex border-b border-gray-200 shadow">
@@ -72,8 +85,10 @@ const Categoty = () => {
                                                     </div>
                                                 </td>                                  
                                                 <td className="px-6 py-4">
-                                                <button className="mx-1 btn btn-info btn-xs">Editar</button>
-                                                <button className="mx-1 btn btn-error btn-xs">Excluir</button>
+                                                    <Link to={'/adicionar-categoria'} state={category}>
+                                                        <button className="mx-1 btn btn-info btn-xs">Editar</button>
+                                                    </Link>
+                                                    <button onClick={() => removeCategory(category.id)} className="mx-1 btn btn-error btn-xs">Excluir</button>
                                                 </td>
                                             </tr>
                                         </tbody>
