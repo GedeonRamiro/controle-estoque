@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { supabase } from "services/supabase"
 import { useAuth } from "../../context/auth"
 import { useToasts } from 'react-toast-notifications';
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 type Category = {
     created_at: Date
@@ -15,8 +15,9 @@ type Category = {
 const Categoty = () => {
     
     const { addToast } = useToasts();
- 
+    
     const auth = useAuth()
+   
 
     const [categories, setCategories] = useState<Category[] | null>(null)
     const [loading, setLoading] = useState(false)
@@ -47,11 +48,14 @@ const Categoty = () => {
     }
 
     useEffect(() => {
-            getCategories()
-    
+
+            if(auth.user.id) {
+                getCategories()
+            }
+        
         // eslint-disable-next-line react-hooks/exhaustive-deps
 
-    }, [])
+    }, [auth])
 
     return (
         <Header>
@@ -77,7 +81,7 @@ const Categoty = () => {
                                         </thead>
                                     )}
                                     {categories && categories.map(category =>  (
-                                        <tbody className="text-center bg-white">
+                                        <tbody key={category.id} className="text-center bg-white">
                                             <tr className="whitespace-nowrap">
                                                 <td className="px-6 py-4">
                                                     <div className="text-sm text-gray-900">
