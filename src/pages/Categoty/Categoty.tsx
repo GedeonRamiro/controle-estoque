@@ -45,6 +45,8 @@ const Categoty = () => {
             addToast(error.message, { appearance: 'error',  autoDismiss: true });  
         }
 
+        addToast('Categoria excluida com sucesso!', { appearance: 'success',  autoDismiss: true });
+        
     }
 
     useEffect(() => {

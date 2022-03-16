@@ -7,8 +7,6 @@ export const AuthProvider = ( {children} ) => {
 
     const [user, setUser] = useState(true)
 
-    console.log(user)
-
     const logout = async () => {
         const { error } = await supabase.auth.signOut()
 
