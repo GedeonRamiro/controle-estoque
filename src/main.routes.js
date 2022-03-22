@@ -5,6 +5,7 @@ import Home from './pages/Home/Home'
 import CreateAccount from './pages/CreateAccount'
 import Login from "./pages/Login";
 import Products from './pages/Products'
+import CreateProduct from './pages/Products/CreateProduct'
 import Categoty from './pages/Categoty'
 import CreateCategory from './pages/Categoty/CreateCategory'
 import { AuthProvider } from './context/auth'
@@ -22,6 +23,7 @@ const MainRoutes = () => {
                 <Route path={'/produtos'} element={<ProtectedRoute> <Products /> </ProtectedRoute>} />
                 <Route path={'/categorias'} element={<ProtectedRoute> <Categoty /> </ProtectedRoute>} />
                 <Route path={'/adicionar-categoria'} element={<ProtectedRoute> <CreateCategory /> </ProtectedRoute>} />
+                <Route path={'/adicionar-produto'} element={<ProtectedRoute> <CreateProduct /> </ProtectedRoute>} />
             </Routes>        
         </AuthProvider>
     )
