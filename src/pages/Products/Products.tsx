@@ -26,6 +26,7 @@ const Products = () => {
     const [products, setProducts] = useState<Product[] | null>(null)
     const [loading, setLoading] = useState(false)
 
+
     const getProducts = async () => {
         const { data, error } = await supabase.from('product')
             .select('*')
@@ -39,13 +40,27 @@ const Products = () => {
         setLoading(true)  
     }
 
+    const removeProduct = async (id: number) => {
+        const { data, error } = await supabase.from('product').delete().match({'id': id})
+
+        const dataDelete = products?.filter(item => item.id !== data?.[0].id)
+        setProducts(dataDelete ?? products)
+
+        if(error){
+            return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
+        }
+
+        addToast('Produto excluido com sucesso!', { appearance: 'success',  autoDismiss: true });
+        
+    }
+
     useEffect(() => {
         if(auth.user.id) {
             getProducts()
         }
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [auth])
 
 
     return (
@@ -65,7 +80,7 @@ const Products = () => {
                             </div>
                             <div className="justify-center mb-4 card-actions">
                                 <button className="btn btn-info btn-sm">Editar</button>
-                                <button className="btn btn-error btn-sm">Excluir</button>
+                                <button onClick={() => removeProduct(product.id)} className="btn btn-error btn-sm">Excluir</button>
                             </div>
                         </div>
                 ))}
