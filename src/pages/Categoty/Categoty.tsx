@@ -18,7 +18,6 @@ const Categoty = () => {
     
     const auth = useAuth()
    
-
     const [categories, setCategories] = useState<Category[] | null>(null)
     const [loading, setLoading] = useState(false)
 
@@ -28,7 +27,7 @@ const Categoty = () => {
         .eq('user_id', auth.user.id)
         
         if(error){
-            addToast(error.message, { appearance: 'error',  autoDismiss: true });  
+            return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
         }
           
           setCategories(data)
@@ -108,12 +107,12 @@ const Categoty = () => {
                             </div>
                         </div>
                     </div>
+                </div>
                     {!loading && (
                         <div className='absolute inset-0 flex flex-col items-center justify-center'>
                                 <button className="btn btn-sm btn-ghost loading">loading</button>
                         </div>
                     )}
-                </div>
         </Header>
     )
 }
