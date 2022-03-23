@@ -10,9 +10,14 @@ import { Link, useLocation } from "react-router-dom";
 import { supabase } from "services/supabase";
 
 type LocationState = {
+    amount: number
+    category_id: number
     created_at: string
+    description: string
     id: number
+    img_url: string
     name: string
+    price: number
     user_id: string
 }
 
@@ -61,10 +66,14 @@ const CreateProduct = () => {
 
     
     const [loading, setLoading] = useState(false)
-    const [name, setName] = useState(state ? state.name : '')
     const [categories, setCategories] = useState<Category[] | null>(null)
-    const [product, setProduct] = useState()
+    const [name, setName] = useState(state ? state.name : '')
+    const [description, setDescription] = useState(state ? state.description : '')
+    const [amount, setAmount] = useState(state ? state.amount : '')
+    const [price, setPrice] = useState(state ? state.price : '')
+    
 
+    console.log("categories:", categories)
 
     const getCategories = async () => {
         const { data, error} = await supabase.from('category')
@@ -102,8 +111,12 @@ const CreateProduct = () => {
     }
     
     useEffect(() => {
-        getCategories()
-    }, [])
+        if(auth.user.id) {
+            getCategories()
+        }
+
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [auth])
 
     return (
       <Header>
@@ -131,6 +144,8 @@ const CreateProduct = () => {
                     className="mb-2 textarea textarea-bordered" 
                     placeholder="descrição do produto"
                     {...register('description')}
+                    onChange={event => setDescription(event.target.value)}
+                    value={description}
                 >
                 </textarea>
                 <label className="label">
@@ -142,6 +157,8 @@ const CreateProduct = () => {
                     placeholder='quantidade de produto'
                     className="mb-2 input input-bordered"
                     {...register('amount')}
+                    onChange={event => setAmount(event.target.value)}
+                    value={amount}
                 />
                  <label className="label">
                     <span className="label-text">Preço</span>
@@ -152,6 +169,8 @@ const CreateProduct = () => {
                     placeholder='preço do produto'
                     className="mb-2 input input-bordered"
                     {...register('price')}
+                    onChange={event => setPrice(event.target.value)}
+                    value={price}
                 />
                 {categories?.length !== 0 && categories !== null && (
                     <>
