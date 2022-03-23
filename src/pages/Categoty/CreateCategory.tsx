@@ -64,7 +64,6 @@ const CreateCategory = () => {
       };
 
       const editCategory: SubmitHandler<Inputs> = async (name: Inputs) => {
-        console.log('TESTANDO EDIÇÃO', name)
          setLoading(true)
 
          const { data, error } = await supabase.from('category')
