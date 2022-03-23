@@ -42,7 +42,7 @@ const Categoty = () => {
         setCategories(dataDelete ?? categories)
 
         if(error){
-            addToast(error.message, { appearance: 'error',  autoDismiss: true });  
+            return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
         }
 
         addToast('Categoria excluida com sucesso!', { appearance: 'success',  autoDismiss: true });

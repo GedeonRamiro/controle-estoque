@@ -87,7 +87,7 @@ const CreateProduct = () => {
         .insert({...data,  user_id: id }).single()
 
        if(error){
-           addToast(error.message, { appearance: 'error',  autoDismiss: true });  
+           return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
          } else {
            addToast('Categoria criada com sucesso!', { appearance: 'success',  autoDismiss: true });
            reset( {name: ''} )

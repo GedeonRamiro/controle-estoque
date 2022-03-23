@@ -54,7 +54,7 @@ const CreateCategory = () => {
          .insert({name: name.name, user_id: id}).single()
 
         if(error){
-            addToast(error.message, { appearance: 'error',  autoDismiss: true });  
+            return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
           } else {
             addToast('Categoria criada com sucesso!', { appearance: 'success',  autoDismiss: true });
             reset( {name: ''} )
@@ -64,6 +64,7 @@ const CreateCategory = () => {
       };
 
       const editCategory: SubmitHandler<Inputs> = async (name: Inputs) => {
+      
          setLoading(true)
 
          const { data, error } = await supabase.from('category')

@@ -32,7 +32,7 @@ const Products = () => {
             .eq('user_id', auth.user.id)
         
         if(error){
-            addToast(error.message, { appearance: 'error',  autoDismiss: true });  
+            return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
         }
 
         setProducts(data)
