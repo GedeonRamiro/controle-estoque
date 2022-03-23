@@ -79,7 +79,9 @@ const Products = () => {
                                 <p>Quantidade: {product.amount}</p>
                             </div>
                             <div className="justify-center mb-4 card-actions">
-                                <button className="btn btn-info btn-sm">Editar</button>
+                                <Link to={'/adicionar-produto'} state={product}>
+                                    <button className="btn btn-info btn-sm">Editar</button>
+                                </Link>
                                 <button onClick={() => removeProduct(product.id)} className="btn btn-error btn-sm">Excluir</button>
                             </div>
                         </div>
