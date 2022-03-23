@@ -75,7 +75,7 @@ const CreateCategory = () => {
          console.log(data)
 
         if(error){
-            addToast(error.message, { appearance: 'error',  autoDismiss: true });  
+            return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
           } else {
             addToast('Categoria atualizada com sucesso!', { appearance: 'success',  autoDismiss: true });
             reset( {name: ''} )
