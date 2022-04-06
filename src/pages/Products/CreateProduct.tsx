@@ -8,6 +8,8 @@ import { useAuth } from "context/auth";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { supabase } from "services/supabase";
+import { FaUpload } from 'react-icons/fa';
+import { v4 as uuidv4 } from 'uuid';
 
 type LocationState = {
     amount: number
@@ -22,6 +24,8 @@ type LocationState = {
 }
 
 type Inputs = {
+    id: string
+    img_url: {}
     name: string,
     description: string
     amount: number
@@ -36,8 +40,18 @@ type Inputs = {
     user_id: string
 }
 
+/* type Image = {
+    lastModified: number
+    lastModifiedDate: string
+    name: string
+    size: number
+    type: string
+    webkitRelativePath: string
+} */
+
   
 const schema = yup.object({
+    //img_url: yup.string().required('Campo foto obrigatório'),
     name: yup.string().required('Campo nome obrigatório'),
     description: yup.string().required('Campo descrição obrigatório'),
     amount: yup.number().typeError('Campo quantidade obrigatório'),
@@ -71,9 +85,9 @@ const CreateProduct = () => {
     const [description, setDescription] = useState(state ? state.description : '')
     const [amount, setAmount] = useState(state ? state.amount : '')
     const [price, setPrice] = useState(state ? state.price : '')
-    
-
-    console.log("categories:", categories)
+    const [categoryId, setCategoryId] = useState(state ? state.category_id : '')
+    const [file, setFile] = useState<File>({} as File)
+    const [imageURL, setImageURL] = useState<string | ''>('')
 
     const getCategories = async () => {
         const { data, error} = await supabase.from('category')
@@ -87,28 +101,79 @@ const CreateProduct = () => {
           setCategories(data)
     }
 
-    const createProduct = async (data: Inputs) => {
+    const up = (e: any) => {
+        setFile(e.target.files[0])
+    }
+
+    const createProduct = async (dataForm: Inputs) => {
+      
         setLoading(true)
 
-        console.log({...data,  user_id: id })
+        const fileName = uuidv4();    
+        const { data } = await supabase
+        .storage
+        .from('products')
+        .upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: false
+        });
 
-        const { error } = await supabase.from('product')
-        .insert({...data,  user_id: id }).single()
+        setImageURL(String(data?.Key))
+
+        const { publicURL } = supabase
+        .storage
+        .from('products')
+        .getPublicUrl(imageURL)
+
+         
+     const { error } = await supabase.from('product')
+        .insert({...dataForm,  user_id: id  , img_url: publicURL+`${fileName}` }).single()
 
        if(error){
+            setLoading(false)
            return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
          } else {
            addToast('Categoria criada com sucesso!', { appearance: 'success',  autoDismiss: true });
            reset( {name: ''} )
            navigate('/produtos');
-         }
-         setLoading(false)  
+         }  
+         setLoading(false)
      };
     
 
-    const editProduct = () => {
+     const editProduct: SubmitHandler<Inputs> = async (dataEdit: Inputs) => {
+      
+        setLoading(true)
+
+        const { data } = await supabase
+        .storage
+        .from('products')
+        .update(dataEdit.id, file, {
+            cacheControl: '3600',
+            upsert: false
+        });
+
+        setImageURL(String(data?.Key))
+
+        const { publicURL } = supabase
+        .storage
+        .from('products')
+        .getPublicUrl(imageURL)
+
+        const { error } = await supabase.from('product')
+        .update(dataEdit)
+        .match({...state, img_url: publicURL+`${state.id}` })
         
-    }
+
+       if(error){
+           return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
+         } else {
+           addToast('Produto atualizado com sucesso!', { appearance: 'success',  autoDismiss: true });
+           reset( {name: ''} )
+           navigate('/produtos');
+         }
+         setLoading(false)   
+     };
     
     useEffect(() => {
         if(auth.user.id) {
@@ -119,11 +184,31 @@ const CreateProduct = () => {
     }, [auth])
 
     return (
-      <Header>
+        <Header>
            <form onSubmit={handleSubmit(state ? editProduct : createProduct)} className="form-control">
                 <label className="text-center label">
                     <span className="font-bold uppercase mb-7"> {state ? 'Editar' : 'Novo'} Produto </span>
                 </label> 
+                {state ? (
+                     <img src={state.img_url} alt={state.name} className='w-full mb-10'/>
+                ) : (
+                   <>
+                    <div className="flex items-center justify-center my-4 bg-grey-lighter">
+                        <label className="flex flex-col items-center w-full px-4 py-6 tracking-widest text-gray-500 uppercase bg-gray-100 border rounded-lg cursor-pointer hover:bg-gray-700 hover:text-white">
+                            <FaUpload size={24} />
+                            <span className="mt-2 text-sm leading-normal">carregar imagem</span>
+                            <input 
+                                type='file'
+                                //{...register('img_url')}  
+                                name='image' 
+                                className="hidden"
+                                onChange={up}
+                                />
+                        </label>
+                    </div>
+                    {file.name && <img className='w-full mb-10' src={URL.createObjectURL(file)} alt={file.name} /> }
+                    </>
+                )}
                 <label className="label">
                     <span className="label-text">Nome</span>
                     {errors.name?.message && <p className='text-sm text-red-500 '>* {errors.name?.message}</p> }
@@ -177,10 +262,10 @@ const CreateProduct = () => {
                         <label className="label">
                             <span className="label-text">Categoria</span>
                         </label>
-                        <select className="w-full bg-gray-100 select"  {...register('category_id')}>
+                        <select className="w-full bg-gray-100 select"  {...register('category_id')} onChange={event => setCategoryId(event.target.value)} value={categoryId}>
                             {categories && categories.map(category => (
                                 <>
-                              <option value={category.id} >{category.name}</option>
+                              <option  value={category.id} >{category.name}</option>
                                 </>
                             ))}
                         </select>
