@@ -265,7 +265,7 @@ const CreateProduct = () => {
                         <select className="w-full bg-gray-100 select"  {...register('category_id')} onChange={event => setCategoryId(event.target.value)} value={categoryId}>
                             {categories && categories.map(category => (
                                 <>
-                              <option  value={category.id} >{category.name}</option>
+                                    <option key={category.id}  value={category.id} >{category.name}</option>
                                 </>
                             ))}
                         </select>

@@ -70,8 +70,8 @@ const Products = () => {
             </Link>
             <div className="grid gap-10 my-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
                 {products && products.map(product => (
-                        <div className="shadow-xl card bg-base-100">
-                            <div className="w-full h-96 avatar" ><img src={product.img_url} alt="Shoes" /></div >
+                        <div key={product.id} className="shadow-xl card bg-base-100">
+                            <div className="w-full h-96 avatar" ><img src={product.img_url} alt={product.name} /></div >
                             <div className="card-body">
                                 <h2 className="card-title">{product.name}</h2>
                                 <p>{product.description}</p>
