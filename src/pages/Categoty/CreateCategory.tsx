@@ -72,8 +72,6 @@ const CreateCategory = () => {
          .eq(`name`, state.name)
          
 
-         console.log(data)
-
         if(error){
             return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
           } else {
