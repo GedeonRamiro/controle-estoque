@@ -1,3 +1,5 @@
+import { FaStoreAlt } from "react-icons/fa"
+import { MdStore } from "react-icons/md"
 import { Link } from "react-router-dom"
 import { useAuth } from '../../context/auth'
 
@@ -9,6 +11,8 @@ type IProps = {
 const Header = ( { children }: IProps ) => {
 
     const  auth = useAuth()
+
+    console.log(auth.user.id)
 
     return (
         <div className="h-screen drawer">
@@ -34,8 +38,15 @@ const Header = ( { children }: IProps ) => {
                                 <Link to={'/categorias'}>
                                     <a className="btn btn-ghost btn-sm rounded-btn no-animation">Categorias</a>              
                                 </Link>
+                                <Link to={`/public-poducts/${auth.user.id}`} className='flex items-center rounded'>
+                                    <a className="btn btn-ghost btn-sm rounded-btn no-animation">
+                                        Minha Loja 
+                                        <FaStoreAlt className='ml-2' /> 
+                                    </a>    
+                                </Link>
                             </div>
                         </div> 
+
                         <div className="flex-none text-white">
                             <button onClick={auth.logout} className="btn btn-ghost btn-sm rounded-btn no-animation">Sair</button>      
                         </div>
