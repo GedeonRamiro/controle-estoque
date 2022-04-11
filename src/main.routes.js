@@ -20,7 +20,7 @@ const MainRoutes = () => {
                 <Route index element={<ProtectedRoute> <Home /> </ProtectedRoute>} /> 
                 <Route path={'/login'} element={<Login />} />
                 <Route path={'/create-account'} element={<CreateAccount />} />
-                <Route path={'/public-poducts'} element={<PublicProduct />} />
+                <Route path={'/public-poducts/:id'} element={<PublicProduct />} />
                 <Route path={'/'} element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
                 <Route path={'/produtos'} element={<ProtectedRoute> <Products /> </ProtectedRoute>} />
                 <Route path={'/categorias'} element={<ProtectedRoute> <Categoty /> </ProtectedRoute>} />
