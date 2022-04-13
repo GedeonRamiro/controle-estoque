@@ -89,6 +89,10 @@ const CreateProduct = () => {
     const [file, setFile] = useState<File>({} as File)
     const [imageURL, setImageURL] = useState<string | ''>('')
 
+    console.log("FILE STATE:", file)
+    console.log("IMG URL:", imageURL)
+    
+
     const getCategories = async () => {
         const { data, error} = await supabase.from('category')
         .select('*')
@@ -142,28 +146,12 @@ const CreateProduct = () => {
     
 
      const editProduct: SubmitHandler<Inputs> = async (dataEdit: Inputs) => {
-      
         setLoading(true)
 
-        const { data } = await supabase
-        .storage
-        .from('products')
-        .update(dataEdit.id, file, {
-            cacheControl: '3600',
-            upsert: false
-        });
-
-        setImageURL(String(data?.Key))
-
-        const { publicURL } = supabase
-        .storage
-        .from('products')
-        .getPublicUrl(imageURL)
 
         const { error } = await supabase.from('product')
         .update(dataEdit)
-        .match({...state, img_url: publicURL+`${state.id}` })
-        
+        .match({...state})
 
        if(error){
            return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
@@ -190,23 +178,23 @@ const CreateProduct = () => {
                     <span className="font-bold uppercase mb-7"> {state ? 'Editar' : 'Novo'} Produto </span>
                 </label> 
                 {state ? (
-                     <img src={state.img_url} alt={state.name} className='w-full mb-10'/>
+                     <img src={state.img_url} alt={state.name} className='w-full mb-10 rounded-lg shadow-2xl'/>
                 ) : (
                    <>
                     <div className="flex items-center justify-center my-4 bg-grey-lighter">
                         <label className="flex flex-col items-center w-full px-4 py-6 tracking-widest text-gray-500 uppercase bg-gray-100 border rounded-lg cursor-pointer hover:bg-gray-700 hover:text-white">
                             <FaUpload size={24} />
                             <span className="mt-2 text-sm leading-normal">carregar imagem</span>
-                            <input 
+                            <input
+                                accept="image/png, image/jpeg"
                                 type='file'
-                                //{...register('img_url')}  
                                 name='image' 
                                 className="hidden"
                                 onChange={up}
                                 />
                         </label>
                     </div>
-                    {file.name && <img className='w-full mb-10' src={URL.createObjectURL(file)} alt={file.name} /> }
+                    {file.name && <img className='w-full mb-10 rounded-lg shadow-2xl' src={URL.createObjectURL(file)} alt={file.name} /> }
                     </>
                 )}
                 <label className="label">
