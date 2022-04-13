@@ -12,8 +12,6 @@ const Header = ( { children }: IProps ) => {
 
     const  auth = useAuth()
 
-    console.log(auth.user.id)
-
     return (
         <div className="h-screen drawer">
             <input id="my-drawer-3" type="checkbox" className="drawer-toggle" /> 
