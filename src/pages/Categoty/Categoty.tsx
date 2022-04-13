@@ -3,7 +3,9 @@ import { useEffect, useState } from "react"
 import { supabase } from "services/supabase"
 import { useAuth } from "../../context/auth"
 import { useToasts } from 'react-toast-notifications';
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { FiEdit } from 'react-icons/fi';
+import { RiDeleteBin2Line } from 'react-icons/ri';
 
 type Category = {
     created_at: Date
@@ -82,7 +84,7 @@ const Categoty = () => {
                                         </thead>
                                     )}
                                     {categories && categories.map(category =>  (
-                                        <tbody key={category.id} className="text-center bg-white">
+                                        <tbody key={category.id} className="text-center bg-white border">
                                             <tr className="whitespace-nowrap">
                                                 <td className="px-6 py-4">
                                                     <div className="text-sm text-gray-900">
@@ -91,9 +93,9 @@ const Categoty = () => {
                                                 </td>                                  
                                                 <td className="px-6 py-4">
                                                     <Link to={'/adicionar-categoria'} state={category}>
-                                                        <button className="mx-1 btn btn-info btn-xs">Editar</button>
+                                                        <button className="p-2 mx-1 text-white bg-blue-500 rounded"><FiEdit /></button>
                                                     </Link>
-                                                    <button onClick={() => removeCategory(category.id)} className="mx-1 btn btn-error btn-xs">Excluir</button>
+                                                    <button onClick={() => removeCategory(category.id)} className="p-2 mx-1 text-white bg-red-500 rounded"><RiDeleteBin2Line /></button>
                                                 </td>
                                             </tr>
                                         </tbody>
