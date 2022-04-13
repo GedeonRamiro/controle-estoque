@@ -76,16 +76,19 @@ const PublicProduct = () => {
 
     return (
         <div className='container mx-auto'>
-            <div className='flex justify-between my-10'>
-                <h1 className='text-4xl'>Produtos</h1>
-                <div className="form-control">
-                    <div className="input-group">
-                        <input type="text" placeholder="Search…" className="input input-bordered" onChange={handleChangeSearchTerm} />
-                        <button className="btn btn-square">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-                        </button>
-                    </div>
+            <a href="#my-modal" className="btn">open modal</a>
+        <div className="flex items-center px-4 modal" id="my-modal">
+            <div className=" modal-box">
+                <h3 className="text-lg font-bold">Congratulations random Interner user!</h3>
+                <p className="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for free!</p>
+                <div className="modal-action">
+                <a href="#" className="btn">Yay!</a>
                 </div>
+            </div>
+        </div>
+            <div className='justify-between flex-1 mx-4 mt-10 sm:mx-0 sm:flex'>
+                <h1 className='text-2xl border-b-4 border-green-500 sm:text-4xl w-min'>Produtos</h1>
+                <input type="text" placeholder="Pesquisar..." className="w-full my-4 sm:w-max input input-bordered sm:my-0" onChange={handleChangeSearchTerm} />
             </div>
             <div className="grid gap-10 my-4 lg:gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
             {products && products.map(product => (
