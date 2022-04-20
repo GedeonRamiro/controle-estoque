@@ -32,8 +32,6 @@ const PublicProduct = () => {
     const [loading, setLoading] = useState(false)
     const [searchTerm, setSerachTerm] = useState('')
     const [filterProducts, setFilterProducts] = useState<Product[] | null>(null)
-
-    console.log(products)
     
     const debouncedSearchTerm = useDebounce(searchTerm)
 
@@ -83,8 +81,8 @@ const PublicProduct = () => {
             </div>
             <div className="grid gap-10 my-4 lg:gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
             {products && products.map(product => (
-                <a href={`#my-modal${product.id}`}>
-                    <div key={product.id} className="mx-4 shadow-xl sm:mx-0 card bg-base-100">
+                <a href={`#my-modal${product.id}`}  key={product.id}>
+                    <div className="mx-4 shadow-xl sm:mx-0 card bg-base-100">
                         <div className="w-full h-80 avatar" ><img src={product.img_url} alt={product.name} /></div >
                         <div className="text-center card-body">
                             <h2 className="card-title">{product.name}</h2>
