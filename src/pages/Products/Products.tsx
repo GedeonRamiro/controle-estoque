@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBin2Line } from 'react-icons/ri';
 
+
 type Product = {
     amount: number
     category_id: number

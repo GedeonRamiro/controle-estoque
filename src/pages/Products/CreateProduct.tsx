@@ -10,6 +10,11 @@ import { Link, useLocation } from "react-router-dom";
 import { supabase } from "services/supabase";
 import { FaUpload } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
+import * as CurrencyFormat from 'react-currency-format';
+
+
+
+
 
 type LocationState = {
     amount: number
@@ -66,6 +71,7 @@ const CreateProduct = () => {
     const navigate = useNavigate();
     const location = useLocation()
     const state = location.state as LocationState;
+    const CurrencyFormat = require('react-currency-format');
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm<Inputs>({
         resolver: yupResolver(schema)
@@ -89,9 +95,7 @@ const CreateProduct = () => {
     const [file, setFile] = useState<File>({} as File)
     const [imageURL, setImageURL] = useState<string | ''>('')
 
-    console.log("FILE STATE:", file)
-    console.log("IMG URL:", imageURL)
-    
+    console.log(price)
 
     const getCategories = async () => {
         const { data, error} = await supabase.from('category')
@@ -131,7 +135,7 @@ const CreateProduct = () => {
 
          
      const { error } = await supabase.from('product')
-        .insert({...dataForm,  user_id: id  , img_url: publicURL+`${fileName}` }).single()
+        .insert({...dataForm, price, user_id: id, img_url: publicURL+`${fileName}` }).single()
 
        if(error){
             setLoading(false)
@@ -148,10 +152,10 @@ const CreateProduct = () => {
      const editProduct: SubmitHandler<Inputs> = async (dataEdit: Inputs) => {
         setLoading(true)
 
-
         const { error } = await supabase.from('product')
-        .update(dataEdit)
-        .match({...state})
+        .update({...dataEdit, price})
+        .eq('id', state.id)
+               
 
        if(error){
            return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
@@ -237,14 +241,31 @@ const CreateProduct = () => {
                     <span className="label-text">Preço</span>
                     {errors.price?.message && <p className='text-sm text-red-500 '>* {errors.price?.message}</p> }
                 </label>
-                <input 
+               {/*  <input 
                     type="number" 
                     placeholder='preço do produto'
                     className="mb-2 input input-bordered"
                     {...register('price')}
                     onChange={event => setPrice(event.target.value)}
                     value={price}
+                /> */}
+
+                <CurrencyFormat 
+                  
+                    placeholder='preço do produto'
+                    className="mb-2 input input-bordered"
+                    {...register('price')}
+                    thousandSeparator={true} 
+                    prefix={'R$ '}
+                    value={price} 
+                    onValueChange={(values: any) => {
+                        const {formattedValue, floatValue, value} = values;
+                        Number(setPrice(floatValue))
+                    }}
+                  
+                   
                 />
+               
                 {categories?.length !== 0 && categories !== null && (
                     <>
                         <label className="label">
