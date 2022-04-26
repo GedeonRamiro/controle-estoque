@@ -8,6 +8,7 @@ import Products from './pages/Products'
 import PublicProduct from './pages/Products/PublicProduct'
 import CreateProduct from './pages/Products/CreateProduct'
 import Categoty from './pages/Categoty'
+import ConfigStore from './pages/ConfigStore'
 import CreateCategory from './pages/Categoty/CreateCategory'
 import { AuthProvider } from './context/auth'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -26,6 +27,7 @@ const MainRoutes = () => {
                 <Route path={'/categorias'} element={<ProtectedRoute> <Categoty /> </ProtectedRoute>} />
                 <Route path={'/adicionar-categoria'} element={<ProtectedRoute> <CreateCategory /> </ProtectedRoute>} />
                 <Route path={'/adicionar-produto'} element={<ProtectedRoute> <CreateProduct /> </ProtectedRoute>} />
+                <Route path={'/configuracoes'} element={<ProtectedRoute> <ConfigStore /> </ProtectedRoute>} />
             </Routes>        
         </AuthProvider>
     )
