@@ -1,7 +1,11 @@
 import { FaStoreAlt } from "react-icons/fa"
-import { MdStore } from "react-icons/md"
+import { MdMiscellaneousServices } from "react-icons/md"
 import { Link } from "react-router-dom"
 import { useAuth } from '../../context/auth'
+
+type ParamsId = {
+    id: string
+}
 
 type IProps = {
     children: React.ReactNode
@@ -11,6 +15,10 @@ type IProps = {
 const Header = ( { children }: IProps ) => {
 
     const  auth = useAuth()
+
+    const openStore = () => {
+        window.open(`/public-poducts/${auth.user.id}`)
+    }
 
     return (
         <div className="h-screen drawer">
@@ -36,12 +44,17 @@ const Header = ( { children }: IProps ) => {
                                 <Link to={'/categorias'}>
                                     <a className="btn btn-ghost btn-sm rounded-btn no-animation">Categorias</a>              
                                 </Link>
-                                <Link to={`/public-poducts/${auth.user.id}`} className='flex items-center rounded'>
+                                <button onClick={openStore} className="btn btn-ghost btn-sm rounded-btn no-animation">
+                                     Minha Loja 
+                                    <FaStoreAlt className='ml-2' /> 
+                                </button>
+                                <Link to={'/configuracoes'} className='flex items-center'>
                                     <a className="btn btn-ghost btn-sm rounded-btn no-animation">
-                                        Minha Loja 
-                                        <FaStoreAlt className='ml-2' /> 
-                                    </a>    
-                                </Link>
+                                        Configurações
+                                        <MdMiscellaneousServices className='ml-2 text-xl'  />              
+                                    </a>
+                                </Link>    
+                              
                             </div>
                         </div> 
 
