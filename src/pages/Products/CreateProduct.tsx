@@ -10,10 +10,6 @@ import { Link, useLocation } from "react-router-dom";
 import { supabase } from "services/supabase";
 import { FaUpload } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
-import * as CurrencyFormat from 'react-currency-format';
-
-
-
 
 
 type LocationState = {
@@ -161,7 +157,6 @@ const CreateProduct = () => {
            return addToast(error.message, { appearance: 'error',  autoDismiss: true });  
          } else {
            addToast('Produto atualizado com sucesso!', { appearance: 'success',  autoDismiss: true });
-           reset( {name: ''} )
            navigate('/produtos');
          }
          setLoading(false)   
@@ -251,13 +246,12 @@ const CreateProduct = () => {
                 /> */}
 
                 <CurrencyFormat 
-                  
                     placeholder='preço do produto'
                     className="mb-2 input input-bordered"
                     {...register('price')}
                     thousandSeparator={true} 
                     prefix={'R$ '}
-                    value={price} 
+                    value={price ? price : 0} 
                     onValueChange={(values: any) => {
                         const {formattedValue, floatValue, value} = values;
                         Number(setPrice(floatValue))
