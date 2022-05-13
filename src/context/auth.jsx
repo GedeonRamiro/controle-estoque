@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from 'services/supabase';
 
+
 const authContext = createContext()
 
 export const AuthProvider = ( {children} ) => {
 
     const [user, setUser] = useState(true)
+    const [productState, setProductState] = useState()
 
     const logout = async () => {
         const { error } = await supabase.auth.signOut()
