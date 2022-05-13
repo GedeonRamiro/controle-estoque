@@ -6,7 +6,6 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastProvider } from 'react-toast-notifications';
 
 
-
 ReactDOM.render(
   <React.StrictMode>
       <ToastProvider>
