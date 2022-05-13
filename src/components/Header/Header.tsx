@@ -1,5 +1,8 @@
 import { FaStoreAlt } from "react-icons/fa"
 import { MdMiscellaneousServices } from "react-icons/md"
+import { AiFillHome } from 'react-icons/ai'
+import { MdProductionQuantityLimits } from 'react-icons/md'
+import { BiCategory } from 'react-icons/bi'
 import { Link } from "react-router-dom"
 import { useAuth } from '../../context/auth'
 
@@ -73,10 +76,42 @@ const Header = ( { children }: IProps ) => {
                 <label htmlFor="my-drawer-3" className="drawer-overlay"></label> 
                 <ul className="p-4 overflow-y-auto menu w-80 bg-base-100">
                 <li>
-                    <a>Item 1</a>
+                    <Link to={'/'}>
+                        <a className="btn btn-ghost btn-sm rounded-btn no-animation">
+                            <AiFillHome className='mr-2 text-xl' />              
+                            Home
+                        </a> 
+                    </Link>
                 </li> 
                 <li>
-                    <a>Item 2</a>
+                    <Link to={'/produtos'}>
+                        <a className="btn btn-ghost btn-sm rounded-btn no-animation">
+                            <MdProductionQuantityLimits className='mr-2 text-xl' /> 
+                            Produtos
+                        </a>              
+                    </Link>
+                </li>
+                <li>
+                    <Link to={'/categorias'}>
+                        <a className="btn btn-ghost btn-sm rounded-btn no-animation">
+                            <BiCategory className='mr-2 text-xl' /> 
+                            Categorias
+                        </a>              
+                    </Link>
+                </li>
+                <li>
+                    <button onClick={openStore} className="btn btn-ghost btn-sm rounded-btn no-animation">
+                        <FaStoreAlt className='mr-2' /> 
+                        Minha Loja 
+                    </button>
+                </li>
+                <li>
+                    <Link to={'/configuracoes'} className='flex items-center'>
+                        <a className="btn btn-ghost btn-sm rounded-btn no-animation">
+                            <MdMiscellaneousServices className='mr-2 text-xl'  />              
+                            Configurações
+                        </a>
+                    </Link>    
                 </li>
                 </ul>
             </div>
