@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import useDebounce from 'components/useDebounce';
 import { AiOutlineWhatsApp } from 'react-icons/ai';
 import React from 'react';
+import Modal from '../../components/Modal';
 
 type ParamsId = {
     id: string;
@@ -169,6 +170,11 @@ const PublicProduct = () => {
             <h1 className='p-2 mt-6 text-3xl font-bold text-center sm:mt-20 sm:text-4xl'>
                 {config?.name}
             </h1>
+
+            {/*   <Modal id='ola' open={<p> oi </p>} btnAction='Confirmar'>
+                <div>funciona modal</div>
+            </Modal> */}
+
             <div className='justify-between flex-1 mx-4 mt-10 sm:mx-0 sm:flex'>
                 <h1 className='text-2xl border-b-4 border-green-500 sm:text-4xl w-min'>Produtos</h1>
                 <input
@@ -203,6 +209,7 @@ const PublicProduct = () => {
                         ))}
                 </select>
             </div>
+
             <div className='justify-center hidden my-10 sm:flex'>
                 {categories && categories.length > 6 ? (
                     <>
