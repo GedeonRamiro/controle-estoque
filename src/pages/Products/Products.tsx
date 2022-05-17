@@ -27,8 +27,6 @@ const Products = () => {
     const [products, setProducts] = useState<Product[] | null>(null);
     const [loading, setLoading] = useState(false);
 
-    console.log(products);
-
     const formatReal = (money: number) => {
         return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(money);
     };
