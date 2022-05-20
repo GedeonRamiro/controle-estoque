@@ -1,10 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useToasts } from 'react-toast-notifications';
 import { useState } from 'react';
 import { supabase } from 'services/supabase';
+import Account from 'components/Account';
 
 type Inputs = {
     email: string;
@@ -62,75 +63,65 @@ const Login = () => {
     };
 
     return (
-        <div className='min-h-screen hero bg-base-200'>
-            <div className='flex-col justify-center hero-content lg:flex-row'>
-                <div className='text-center lg:text-left'>
-                    <h1 className='mb-5 text-3xl font-bold md:text-5xl '>Controle de estoque</h1>
-                    <p className='mb-5'>
-                        O controle de estoque PB ou controlo de stockPE é uma área muito importante
-                        de uma empresa, grande ou pequena.
-                    </p>
+        <Account
+            buttonAccountPage='Criar Conta'
+            textAccountPage='Não tem uma conta?'
+            linkAccountPage='/create-account'
+            textFrom='Por favor entre na sua conta'
+        >
+            <form onSubmit={handleSubmit(onSubmit)} className=''>
+                <div className='mb-4'>
+                    {errors.email?.message && (
+                        <p className='text-sm text-red-500 '>* {errors.email?.message}</p>
+                    )}
+                    <input
+                        type='text'
+                        className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none'
+                        id='exampleFormControlInput1'
+                        placeholder='email'
+                        {...register('email')}
+                    />
                 </div>
-                <div className='flex-shrink-0 w-full max-w-sm shadow-2xl card bg-base-100'>
-                    <form onSubmit={handleSubmit(onSubmit)} className='card-body'>
-                        <div className='form-control'>
-                            <label className='label'>
-                                <span className='label-text'>Email</span>
-                                {errors.email?.message && (
-                                    <p className='text-sm text-red-500'>
-                                        * {errors.email?.message}
-                                    </p>
-                                )}
-                            </label>
-                            <input
-                                type='text'
-                                placeholder='Nome'
-                                className='input input-bordered'
-                                {...register('email')}
-                            />
-                        </div>
-                        <div className='form-control'>
-                            <label className='label'>
-                                <span className='label-text'>Senha</span>
-                                {errors.password?.message && (
-                                    <p className='text-sm text-red-500'>
-                                        * {errors.password?.message}
-                                    </p>
-                                )}
-                            </label>
-                            <input
-                                type='password'
-                                placeholder='Senha'
-                                className='input input-bordered'
-                                {...register('password')}
-                            />
-                            <label className='label'>
-                                <a href='#' className='label-text-alt'>
-                                    Esqueceu a senha?
-                                </a>
-                            </label>
-                        </div>
-                        <div className='mt-6 form-control'>
-                            {!loading ? (
-                                <button type='submit' className='btn btn-accent '>
-                                    Login
-                                </button>
-                            ) : (
-                                <button
-                                    type='submit'
-                                    className='btn btn-accent loading disabled'
-                                ></button>
-                            )}
-                            <Link to={'/create-account'} className='pt-4 text-center'>
-                                <span className='link link-accent'>
-                                    Ainda não tem conta? Criar Conta
-                                </span>
-                            </Link>
-                        </div>
-                    </form>
+
+                {errors.password?.message && (
+                    <p className='text-sm text-red-500'>* {errors.password?.message}</p>
+                )}
+                <div className='mb-4'>
+                    <input
+                        type='password'
+                        className='form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:outline-none'
+                        id='exampleFormControlInput1'
+                        placeholder='senha'
+                        {...register('password')}
+                    />
                 </div>
-            </div>
-        </div>
+                <div className='pt-1 pb-1 mb-12 text-center'>
+                    <button
+                        className='inline-block px-6 py-2.5 disabled:opacity-75 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3'
+                        type='submit'
+                        data-mdb-ripple='true'
+                        data-mdb-ripple-color='light'
+                        style={{
+                            background:
+                                'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
+                        }}
+                        disabled={loading}
+                    >
+                        {!loading ? (
+                            <span>Entrar</span>
+                        ) : (
+                            <>
+                                <span>Carregando...</span>
+                                <div
+                                    className='absolute inline-block w-4 h-4 rounded-full border-1 spinner-border animate-spin'
+                                    role='status'
+                                ></div>
+                            </>
+                        )}
+                    </button>
+                </div>
+            </form>
+        </Account>
     );
 };
 
