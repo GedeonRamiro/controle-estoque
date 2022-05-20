@@ -52,9 +52,11 @@ const Login = () => {
         const { error } = await supabase.auth.signIn(data);
 
         if (error) {
-            addToast(error.message, { appearance: 'error', autoDismiss: true });
         } else {
-            addToast('Login feito com sucesso!', { appearance: 'success', autoDismiss: true });
+            addToast('Login feito com sucesso!', {
+                appearance: 'success',
+                autoDismiss: true,
+            });
             reset({ email: '', password: '' });
             navigate('/');
         }

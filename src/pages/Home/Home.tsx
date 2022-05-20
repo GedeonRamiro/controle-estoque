@@ -1,13 +1,8 @@
-import Header from "components/Header"
-
+import Header from 'components/Header';
+import { FiLogOut } from 'react-icons/fi';
 
 const Home = () => {
+    return <Header>Home</Header>;
+};
 
-    return(
-      <Header>
-          <h1>Home</h1>
-      </Header>
-    )
-}
-
-export default Home
+export default Home;
