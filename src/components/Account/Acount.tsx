@@ -17,7 +17,7 @@ const Account = ({
 }: Props) => {
     return (
         <section className='flex justify-center h-full lg:bg-gray-200 gradient-form md:h-screen'>
-            <div className='container h-full px-4 py-12'>
+            <div className='container h-full px-4 sm:py-10 lg:py-12'>
                 <div className='flex flex-wrap items-center justify-center h-full text-gray-800 g-6'>
                     <div className='xl:w-10/12'>
                         <div className='block bg-white rounded-lg lg:shadow-lg'>
