@@ -18,8 +18,6 @@ type IProps = {
 const Header = ({ children }: IProps) => {
     const auth = useAuth();
 
-    console.log(auth.user.user_metadata.name);
-
     const openStore = () => {
         window.open(`/public-poducts/${auth.user.id}`);
     };
@@ -202,7 +200,9 @@ const Header = ({ children }: IProps) => {
                                 data-bs-toggle='dropdown'
                                 aria-expanded='false'
                             >
-                                <p className='mr-2'>Olá, {auth.user.user_metadata.name}</p>
+                                {auth?.user?.user_metadata?.name && (
+                                    <p className='mr-2'>Olá, {auth?.user?.user_metadata?.name}</p>
+                                )}
 
                                 <div className='flex justify-center space-x-2'>
                                     <button
