@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { MdLogout } from 'react-icons/md';
+import { useState } from 'react';
 
 type IProps = {
     children: React.ReactNode;
@@ -16,6 +17,9 @@ const Header = ({ children }: IProps) => {
     const auth = useAuth();
 
     const userName = auth.user?.user_metadata?.name;
+
+    const [menuAction, setMenuAction] = useState(false);
+    console.log(menuAction);
 
     const openStore = () => {
         window.open(`/public-poducts/${auth.user.id}`);
@@ -27,6 +31,7 @@ const Header = ({ children }: IProps) => {
                 <div className='container mx-auto'>
                     <div className='flex flex-wrap items-center justify-between w-full px-6 container-fluid'>
                         <button
+                            onClick={() => setMenuAction(!menuAction)}
                             className='
                         navbar-toggler
                         text-gray-500
@@ -107,7 +112,7 @@ const Header = ({ children }: IProps) => {
                                 <p className='mr-2 text-sm font-semibold'>Olá, {userName}</p>
                             )}
 
-                            <div className='dropdown dropend'>
+                            <div className='relative dropdown'>
                                 <a
                                     className='flex items-center dropdown-toggle hidden-arrow'
                                     href='#'
@@ -126,7 +131,9 @@ const Header = ({ children }: IProps) => {
                                     </div>
                                 </a>
                                 <ul
-                                    className='absolute z-50 hidden float-left py-2 m-0 mt-1 text-base text-left list-none bg-white border-none rounded-lg shadow-lg lg:right-0 lg:left-auto min-w-max dropdown-menu bg-clip-padding'
+                                    className={`absolute z-50 hidden float-left py-2 m-0 mt-1 text-base text-left list-none bg-white border-none rounded-lg shadow-lg ${
+                                        menuAction ? '' : 'right-0 lg:left-auto'
+                                    } min-w-max dropdown-menu bg-clip-padding`}
                                     aria-labelledby='dropdownMenuButton2'
                                 >
                                     <li>
