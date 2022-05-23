@@ -21,6 +21,119 @@ const Home = () => {
                     </button>
                 </div>
             </div>
+
+            <div className='flex flex-col'>
+                <div className='overflow-x-auto sm:-mx-6 lg:-mx-8'>
+                    <div className='inline-block min-w-full py-2 sm:px-6 lg:px-8'>
+                        <div className='overflow-hidden'>
+                            <table className='min-w-full'>
+                                <thead className='bg-white border-b'>
+                                    <tr>
+                                        <th
+                                            scope='col'
+                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
+                                        >
+                                            #
+                                        </th>
+                                        <th
+                                            scope='col'
+                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
+                                        >
+                                            First
+                                        </th>
+                                        <th
+                                            scope='col'
+                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
+                                        >
+                                            Last
+                                        </th>
+                                        <th
+                                            scope='col'
+                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
+                                        >
+                                            Handle
+                                        </th>
+                                        <th
+                                            scope='col'
+                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
+                                        >
+                                            First
+                                        </th>
+                                        <th
+                                            scope='col'
+                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
+                                        >
+                                            Last
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr className='bg-gray-100 border-b'>
+                                        <td className='px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap'>
+                                            1
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            Mark
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            Otto
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            @mdo
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            @mdo
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            @mdo
+                                        </td>
+                                    </tr>
+                                    <tr className='bg-white border-b'>
+                                        <td className='px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap'>
+                                            2
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            Jacob
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            Thornton
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            @fat
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            Thornton
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            @fat
+                                        </td>
+                                    </tr>
+                                    <tr className='bg-white border-b'>
+                                        <td className='px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap'>
+                                            2
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            Jacob
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            Thornton
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            @fat
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            Thornton
+                                        </td>
+                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
+                                            @fat
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </Header>
     );
 };
