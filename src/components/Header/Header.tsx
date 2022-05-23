@@ -6,10 +6,7 @@ import { BiCategory } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 import { BsFillPersonFill } from 'react-icons/bs';
-
-type ParamsId = {
-    id: string;
-};
+import { MdLogout } from 'react-icons/md';
 
 type IProps = {
     children: React.ReactNode;
@@ -106,9 +103,9 @@ const Header = ({ children }: IProps) => {
                         </div>
 
                         <div className='flex items-center'>
-                            <p className='mr-2 text-sm font-semibold'>
-                                Olá, {userName && userName}
-                            </p>
+                            {userName && (
+                                <p className='mr-2 text-sm font-semibold'>Olá, {userName}</p>
+                            )}
 
                             <div className='dropdown dropend'>
                                 <a
@@ -135,20 +132,22 @@ const Header = ({ children }: IProps) => {
                                     <li>
                                         <Link to={'/configuracoes'}>
                                             <a
-                                                className='block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100'
+                                                className='flex w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent items-centerblock dropdown-item whitespace-nowrap hover:bg-gray-100'
                                                 href='#'
                                             >
-                                                Configurações
+                                                <MdMiscellaneousServices />
+                                                <span className='ml-1'>Configurações</span>
                                             </a>
                                         </Link>
                                     </li>
                                     <li>
                                         <a
                                             onClick={auth.logout}
-                                            className='block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100'
+                                            className='flex items-center w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent items-centerblock dropdown-item whitespace-nowrap hover:bg-gray-100'
                                             href='#'
                                         >
-                                            Sair
+                                            <MdLogout />
+                                            <span className='ml-1'>Sair</span>
                                         </a>
                                     </li>
                                 </ul>
