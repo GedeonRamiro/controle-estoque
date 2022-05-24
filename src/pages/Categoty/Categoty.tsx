@@ -5,7 +5,9 @@ import { useAuth } from '../../context/auth';
 import { useToasts } from 'react-toast-notifications';
 import { Link } from 'react-router-dom';
 import { FiEdit } from 'react-icons/fi';
-import { RiDeleteBin2Line } from 'react-icons/ri';
+import { RiDeleteBin2Line, RiAddFill } from 'react-icons/ri';
+import { AiOutlineMore } from 'react-icons/ai';
+import Spinner from 'components/Spinner';
 
 type Category = {
     created_at: Date;
@@ -59,7 +61,7 @@ const Categoty = () => {
 
     return (
         <Header>
-            <div className='flex flex-col'>
+            {/*   <div className='flex flex-col'>
                 <div>
                     <Link to={'/adicionar-categoria'}>
                         <button className='my-10 btn btn-block sm:btn-wide btn-sm'>
@@ -119,11 +121,128 @@ const Categoty = () => {
                     </div>
                 </div>
             </div>
+            
+ */}
+            <div className='flex justify-end my-4 space-x-2'>
+                <Link to={'/adicionar-categoria'}>
+                    <button
+                        type='button'
+                        data-mdb-ripple='true'
+                        data-mdb-ripple-color='light'
+                        className=' flex items-center mr-2 lg:mr-0 px-4 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
+                    >
+                        <RiAddFill size={18} />
+                        Nova Categoria
+                    </button>
+                </Link>
+            </div>
+
+            <div className='flex flex-col'>
+                <div className='overflow-x-auto sm:-mx-6 lg:-mx-8'>
+                    <div className='inline-block min-w-full py-2 sm:px-6 lg:px-8'>
+                        <div className='overflow-hidden'>
+                            <table className='min-w-full'>
+                                {categories && (
+                                    <thead className='font-bold text-gray-900 bg-white border-b'>
+                                        <tr>
+                                            <th
+                                                scope='col'
+                                                className='px-6 py-4 text-sm text-left '
+                                            >
+                                                #
+                                            </th>
+                                            <th scope='col' className='px-6 py-4 text-sm'>
+                                                Nome
+                                            </th>
+                                            <th scope='col' className='px-6 py-4 text-sm '>
+                                                Menu
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                )}
+                                {categories &&
+                                    categories.map((category, index) => (
+                                        <tbody>
+                                            <tr
+                                                className={` border-b ${
+                                                    index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
+                                                }`}
+                                            >
+                                                <td className='px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap'>
+                                                    {index + 1}
+                                                </td>
+                                                <td className='px-6 py-4 text-sm font-light text-center text-gray-900 whitespace-nowrap'>
+                                                    {category.name}
+                                                </td>
+                                                <td className='px-6 py-4 text-sm font-light text-center text-gray-900 whitespace-nowrap'>
+                                                    <div className='flex justify-center'>
+                                                        <div>
+                                                            <div className='relative dropdown'>
+                                                                <button
+                                                                    className=' dropdown-toggle'
+                                                                    type='button'
+                                                                    id='dropdownMenuButton1'
+                                                                    data-bs-toggle='dropdown'
+                                                                    aria-expanded='false'
+                                                                >
+                                                                    <AiOutlineMore size={24} />
+                                                                </button>
+                                                                <ul
+                                                                    className='absolute z-50 hidden float-left py-2 m-0 mt-1 text-base text-left list-none bg-white border-none rounded-lg shadow-lg dropdown-menu min-w-max bg-clip-padding'
+                                                                    aria-labelledby='dropdownMenuButton1'
+                                                                >
+                                                                    <h6 className='block w-full px-4 py-2 text-sm font-semibold text-gray-500 uppercase bg-transparent '>
+                                                                        {category.name}
+                                                                    </h6>
+                                                                    <li>
+                                                                        <Link
+                                                                            to={
+                                                                                '/adicionar-categoria'
+                                                                            }
+                                                                            state={category}
+                                                                        >
+                                                                            <a
+                                                                                className='flex items-center w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100'
+                                                                                href='#'
+                                                                            >
+                                                                                <FiEdit />
+                                                                                <span className='ml-1'>
+                                                                                    Editar
+                                                                                </span>
+                                                                            </a>
+                                                                        </Link>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a
+                                                                            className='flex items-center w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100'
+                                                                            href='#'
+                                                                        >
+                                                                            <RiDeleteBin2Line
+                                                                                size={16}
+                                                                            />
+                                                                            <span className='ml-1'>
+                                                                                Excluir
+                                                                            </span>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    ))}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {!loading && (
-                <div className='absolute inset-0 flex flex-col items-center justify-center'>
-                    <button className='btn btn-sm btn-ghost loading'>loading</button>
-                </div>
+                <>
+                    <Spinner />
+                </>
             )}
         </Header>
     );
