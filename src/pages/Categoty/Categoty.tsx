@@ -6,8 +6,8 @@ import { useToasts } from 'react-toast-notifications';
 import { Link } from 'react-router-dom';
 import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBin2Line, RiAddFill } from 'react-icons/ri';
-import { AiOutlineMore } from 'react-icons/ai';
 import Spinner from 'components/Spinner';
+import Modal from 'components/Modal';
 
 type Category = {
     created_at: Date;
@@ -61,68 +61,6 @@ const Categoty = () => {
 
     return (
         <Header>
-            {/*   <div className='flex flex-col'>
-                <div>
-                    <Link to={'/adicionar-categoria'}>
-                        <button className='my-10 btn btn-block sm:btn-wide btn-sm'>
-                            Nova Categoria
-                        </button>
-                    </Link>
-                </div>
-                <div className='w-full'>
-                    <div className='flex border-b border-gray-200 shadow'>
-                        <table className='w-full'>
-                            {categories && (
-                                <thead className='bg-gray-50'>
-                                    <tr>
-                                        <th className='px-6 py-2 text-xs text-gray-500'>
-                                            Categorias
-                                        </th>
-                                        <th className='px-6 py-2 text-xs text-gray-500'>Ação</th>
-                                    </tr>
-                                </thead>
-                            )}
-                            {categories &&
-                                categories.map((category) => (
-                                    <tbody
-                                        key={category.id}
-                                        className='text-center bg-white border'
-                                    >
-                                        <tr className='whitespace-nowrap'>
-                                            <td className='px-6 py-4'>
-                                                <div className='text-sm font-semibold text-gray-900'>
-                                                    {category.name}
-                                                </div>
-                                            </td>
-                                            <td className='px-6 py-4'>
-                                                <Link to={'/adicionar-categoria'} state={category}>
-                                                    <button className='p-2 mx-1 text-white bg-blue-500 border-2 border-blue-600 rounded shadow-lg'>
-                                                        <FiEdit />
-                                                    </button>
-                                                </Link>
-                                                <button
-                                                    onClick={() => removeCategory(category.id)}
-                                                    className='p-2 mx-1 text-white bg-red-500 border-2 border-red-700 rounded shadow-lg'
-                                                >
-                                                    <RiDeleteBin2Line />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                ))}
-                            {categories?.length === 0 && loading && (
-                                <div className='flex flex-col items-center'>
-                                    <div className='mb-10 text-lg font-semibold text-center'>
-                                        Lista vazia!
-                                    </div>
-                                </div>
-                            )}
-                        </table>
-                    </div>
-                </div>
-            </div>
-            
- */}
             <div className='flex justify-end my-4 space-x-2'>
                 <Link to={'/adicionar-categoria'}>
                     <button
@@ -155,7 +93,7 @@ const Categoty = () => {
                                                 Nome
                                             </th>
                                             <th scope='col' className='px-6 py-4 text-sm '>
-                                                Menu
+                                                Ações
                                             </th>
                                         </tr>
                                     </thead>
@@ -176,64 +114,56 @@ const Categoty = () => {
                                                 </td>
                                                 <td className='px-6 py-4 text-sm font-light text-center text-gray-900 whitespace-nowrap'>
                                                     <div className='flex justify-center'>
-                                                        <div>
-                                                            <div className='relative dropdown'>
-                                                                <button
-                                                                    className=' dropdown-toggle'
-                                                                    type='button'
-                                                                    id='dropdownMenuButton1'
-                                                                    data-bs-toggle='dropdown'
-                                                                    aria-expanded='false'
+                                                        <Link
+                                                            to={'/adicionar-categoria'}
+                                                            state={category}
+                                                        >
+                                                            <button
+                                                                type='button'
+                                                                className='inline-block p-2 mx-1 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-blue-500 rounded shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg'
+                                                            >
+                                                                <FiEdit size={18} />
+                                                            </button>
+                                                        </Link>
+                                                        <Modal
+                                                            id={String(category.id)}
+                                                            open={
+                                                                <label
+                                                                    htmlFor={`my-modal${category.id}`}
+                                                                    className='inline-block p-2 mx-1 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-red-500 rounded shadow-md cursor-pointer hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg '
                                                                 >
-                                                                    <AiOutlineMore size={24} />
-                                                                </button>
-                                                                <ul
-                                                                    className='absolute z-50 hidden float-left py-2 m-0 mt-1 text-base text-left list-none bg-white border-none rounded-lg shadow-lg dropdown-menu min-w-max bg-clip-padding'
-                                                                    aria-labelledby='dropdownMenuButton1'
-                                                                >
-                                                                    <h6 className='block w-full px-4 py-2 text-sm font-semibold text-gray-500 uppercase bg-transparent '>
-                                                                        {category.name}
-                                                                    </h6>
-                                                                    <li>
-                                                                        <Link
-                                                                            to={
-                                                                                '/adicionar-categoria'
-                                                                            }
-                                                                            state={category}
-                                                                        >
-                                                                            <a
-                                                                                className='flex items-center w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100'
-                                                                                href='#'
-                                                                            >
-                                                                                <FiEdit />
-                                                                                <span className='ml-1'>
-                                                                                    Editar
-                                                                                </span>
-                                                                            </a>
-                                                                        </Link>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a
-                                                                            className='flex items-center w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100'
-                                                                            href='#'
-                                                                        >
-                                                                            <RiDeleteBin2Line
-                                                                                size={16}
-                                                                            />
-                                                                            <span className='ml-1'>
-                                                                                Excluir
-                                                                            </span>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
+                                                                    <RiDeleteBin2Line size={18} />
+                                                                </label>
+                                                            }
+                                                            btnAction={'Sim'}
+                                                            onClick={() =>
+                                                                removeCategory(category.id)
+                                                            }
+                                                        >
+                                                            <h3 className='text-lg font-bold'>
+                                                                Ops!
+                                                            </h3>
+                                                            <p className='py-4'>
+                                                                Deseja excluir a categoria{' '}
+                                                                <span className='font-semibold uppercase'>
+                                                                    {category.name}?
+                                                                </span>
+                                                            </p>
+                                                        </Modal>
                                                     </div>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     ))}
                             </table>
+
+                            {categories?.length === 0 && loading && (
+                                <div className='mt-10'>
+                                    <div className='text-lg font-semibold text-center '>
+                                        Nenhuma categoria cadastrada!
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
