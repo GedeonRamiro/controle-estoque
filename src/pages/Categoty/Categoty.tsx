@@ -127,13 +127,11 @@ const Categoty = () => {
                                                         </Link>
                                                         <Modal
                                                             id={String(category.id)}
-                                                            open={
-                                                                <label
-                                                                    htmlFor={`my-modal${category.id}`}
-                                                                    className='inline-block p-2 mx-1 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-red-500 rounded shadow-md cursor-pointer hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg '
-                                                                >
-                                                                    <RiDeleteBin2Line size={18} />
-                                                                </label>
+                                                            nameBtnOpen={
+                                                                <RiDeleteBin2Line size={18} />
+                                                            }
+                                                            styleBtnOpen={
+                                                                'inline-block p-2 mx-1 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-red-500 rounded shadow-md cursor-pointer hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg'
                                                             }
                                                             btnAction={'Sim'}
                                                             onClick={() =>
