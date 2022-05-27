@@ -5,7 +5,10 @@ import { useAuth } from '../../context/auth';
 import { useToasts } from 'react-toast-notifications';
 import { Link } from 'react-router-dom';
 import { FiEdit } from 'react-icons/fi';
-import { RiDeleteBin2Line } from 'react-icons/ri';
+import { RiAddFill, RiDeleteBin2Line } from 'react-icons/ri';
+import { GrView } from 'react-icons/gr';
+import Modal from 'components/Modal';
+import Spinner from 'components/Spinner';
 
 type Product = {
     amount: number;
@@ -68,71 +71,151 @@ const Products = () => {
 
     return (
         <Header>
-            <Link to={'/adicionar-produto'}>
-                <button className='my-10 btn btn-block sm:btn-wide btn-sm'>Novo Produto</button>
-            </Link>
+            <div className='flex justify-end my-4 space-x-2'>
+                <Link to={'/adicionar-produto'}>
+                    <button
+                        type='button'
+                        data-mdb-ripple='true'
+                        data-mdb-ripple-color='light'
+                        className=' flex items-center mr-2 lg:mr-0 px-4 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
+                    >
+                        <RiAddFill size={18} />
+                        Novo Produto
+                    </button>
+                </Link>
+            </div>
 
-            <div className='w-full overflow-x-auto lg:overflow-hidden'>
-                <div className='flex border-b border-gray-200 shadow'>
-                    <table className='w-full'>
-                        {products && (
-                            <thead className='bg-gray-50'>
-                                <tr>
-                                    <th className='px-16 py-2 text-xs text-gray-500'>Produtos</th>
-                                    <th className='px-16 py-2 text-xs text-gray-500'>Preço</th>
-                                    <th className='px-16 py-2 text-xs text-gray-500'>Quantidade</th>
-                                    <th className='px-16 py-2 text-xs text-gray-500'>Ação</th>
-                                </tr>
-                            </thead>
-                        )}
-                        {products &&
-                            products.map((product) => (
-                                <tbody key={product.id} className='text-center bg-white border'>
-                                    <tr className='whitespace-nowrap'>
-                                        <td className='flex items-center px-2 py-4'>
-                                            <img
-                                                className='object-cover w-12 h-12 bg-center rounded-full '
-                                                src={product.img_url}
-                                                alt={product.name}
-                                            />
-                                            <div className='ml-2 text-sm font-semibold text-left text-gray-900'>
-                                                {product.name}
-                                            </div>
-                                        </td>
-                                        <td className='text-sm text-gray-900'>
-                                            {formatReal(product.price)}
-                                        </td>
-                                        <td className='text-sm text-gray-900'>{product.amount}</td>
+            <div className='flex flex-col'>
+                <div className='overflow-x-auto sm:-mx-6 lg:-mx-8'>
+                    <div className='inline-block min-w-full py-2 sm:px-6 lg:px-8'>
+                        <div className='overflow-hidden'>
+                            <table className='min-w-full mb-10'>
+                                {products && (
+                                    <thead className='font-bold text-gray-900 bg-white border-b'>
+                                        <tr>
+                                            <th
+                                                scope='col'
+                                                className='px-6 py-4 text-sm text-left '
+                                            ></th>
+                                            <th scope='col' className='px-6 py-4 text-sm'>
+                                                Nome
+                                            </th>
+                                            <th scope='col' className='px-6 py-4 text-sm'>
+                                                Preço
+                                            </th>
 
-                                        <td className='px-6 py-4'>
-                                            <Link to={'/adicionar-produto'} state={product}>
-                                                <button className='p-2 mx-1 text-white bg-blue-500 border-2 border-blue-600 rounded shadow-lg'>
-                                                    <FiEdit />
-                                                </button>
-                                            </Link>
-                                            <button
-                                                onClick={() => removeProduct(product.id)}
-                                                className='p-2 mx-1 text-white bg-red-500 border-2 border-red-700 rounded shadow-lg'
+                                            <th scope='col' className='px-6 py-4 text-sm '>
+                                                Ações
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                )}
+                                {products &&
+                                    products.map((product, index) => (
+                                        <tbody>
+                                            <tr
+                                                className={` border-b ${
+                                                    index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
+                                                }`}
                                             >
-                                                <RiDeleteBin2Line />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            ))}
-                        {products?.length === 0 && loading && (
-                            <h4 className='mb-10 text-lg font-semibold text-center'>
-                                Lista vazia!
-                            </h4>
-                        )}
-                        {!loading && (
-                            <div className='absolute inset-0 flex flex-col items-center justify-center'>
-                                <button className='btn btn-sm btn-ghost loading'>loading</button>
-                            </div>
-                        )}
-                    </table>
+                                                <td className='px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap'>
+                                                    <Modal
+                                                        id={'view' + `${product.id}`}
+                                                        nameBtnOpen={<GrView size={18} />}
+                                                        styleBtnOpen={
+                                                            'inline-block p-2 mx-1 text-xs font-medium leading-tight uppercase transition duration-150 ease-in-out bg-gray-300 rounded shadow-md cursor-pointer hover:bg-gray-400 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg'
+                                                        }
+                                                    >
+                                                        <div className='text-lg'>
+                                                            <div className='whitespace-normal'>
+                                                                <div className='flex justify-center'>
+                                                                    <img
+                                                                        className='object-cover bg-center rounded-lg'
+                                                                        src={product.img_url}
+                                                                        alt={product.name}
+                                                                    />
+                                                                </div>
+                                                                <p className='my-4 font-semibold uppercase'>
+                                                                    {product.name}
+                                                                </p>
+                                                                <p>{product.description}</p>
+                                                                <p className='mt-4 mb-2 font-semibold '>
+                                                                    Preço: {product.price}
+                                                                </p>
+                                                                <p className='mb-2 font-semibold'>
+                                                                    Quantidade: {product.amount}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </Modal>
+                                                </td>
+                                                <td className='px-6 py-4 text-sm font-light text-center text-gray-900 whitespace-nowrap'>
+                                                    {product.name}
+                                                </td>
+
+                                                <td className='px-6 py-4 text-sm font-light text-center text-gray-900 whitespace-nowrap'>
+                                                    {formatReal(product.price)}
+                                                </td>
+
+                                                <td className='px-6 py-4 text-sm font-light text-center text-gray-900 whitespace-nowrap'>
+                                                    <div className='flex justify-center'>
+                                                        <Link
+                                                            to={'/adicionar-produto'}
+                                                            state={product}
+                                                        >
+                                                            <button
+                                                                type='button'
+                                                                className='inline-block p-2 mx-1 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-blue-500 rounded shadow-md hover:bg-blue-600 hover:shadow-lg focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg'
+                                                            >
+                                                                <FiEdit size={18} />
+                                                            </button>
+                                                        </Link>
+                                                        <Modal
+                                                            id={String(product.id)}
+                                                            nameBtnOpen={
+                                                                <RiDeleteBin2Line size={18} />
+                                                            }
+                                                            styleBtnOpen={
+                                                                'inline-block p-2 mx-1 text-xs font-medium leading-tight text-white uppercase transition duration-150 ease-in-out bg-red-500 rounded shadow-md cursor-pointer hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg'
+                                                            }
+                                                            btnAction={'Sim'}
+                                                            onClick={() =>
+                                                                removeProduct(product.id)
+                                                            }
+                                                        >
+                                                            <h3 className='text-lg font-bold'>
+                                                                Ops!
+                                                            </h3>
+                                                            <p className='py-4'>
+                                                                Deseja excluir o produto{' '}
+                                                                <p className='font-semibold uppercase whitespace-normal'>
+                                                                    {product.name}?
+                                                                </p>
+                                                            </p>
+                                                        </Modal>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    ))}
+                            </table>
+
+                            {products?.length === 0 && loading && (
+                                <div className='mt-10'>
+                                    <div className='text-lg font-semibold text-center '>
+                                        Nenhum produto cadastrado!
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </div>
+            {!loading && (
+                <>
+                    <Spinner />
+                </>
+            )}
         </Header>
     );
 };
