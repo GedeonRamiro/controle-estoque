@@ -126,7 +126,7 @@ const Products = () => {
                                                             'inline-block p-2 mx-1 text-xs font-medium leading-tight uppercase transition duration-150 ease-in-out bg-gray-300 rounded shadow-md cursor-pointer hover:bg-gray-400 hover:shadow-lg focus:bg-gray-300 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-800 active:shadow-lg'
                                                         }
                                                     >
-                                                        <div className='text-lg'>
+                                                        <div className='text-base sm:text-lg'>
                                                             <div className='whitespace-normal'>
                                                                 <div className='flex justify-center'>
                                                                     <img
@@ -135,7 +135,7 @@ const Products = () => {
                                                                         alt={product.name}
                                                                     />
                                                                 </div>
-                                                                <p className='my-4 font-semibold uppercase'>
+                                                                <p className='mt-2 font-semibold uppercase'>
                                                                     {product.name}
                                                                 </p>
                                                                 <p>{product.description}</p>
