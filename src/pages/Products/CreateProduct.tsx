@@ -40,15 +40,6 @@ type Category = {
     user_id: string;
 };
 
-/* type Image = {
-    lastModified: number
-    lastModifiedDate: string
-    name: string
-    size: number
-    type: string
-    webkitRelativePath: string
-} */
-
 const schema = yup
     .object({
         //img_url: yup.string().required('Campo foto obrigatório'),
@@ -170,7 +161,7 @@ const CreateProduct = () => {
         <Header>
             <form
                 onSubmit={handleSubmit(state ? editProduct : createProduct)}
-                className='form-control'
+                className='mx-2 mt-4 form-control sm:mt-10'
             >
                 <label className='text-center label'>
                     <span className='font-bold uppercase mb-7'>
@@ -208,117 +199,203 @@ const CreateProduct = () => {
                         )}
                     </>
                 )}
-                <label className='label'>
-                    <span className='label-text'>Nome</span>
+
+                <label className='flex label'>
                     {errors.name?.message && (
                         <p className='text-sm text-red-500 '>* {errors.name?.message}</p>
                     )}
                 </label>
-                <input
-                    type='text'
-                    placeholder='nome do produto'
-                    className='mb-2 input input-bordered'
-                    {...register('name')}
-                    onChange={(event) => setName(event.target.value)}
-                    value={name}
-                />
+                <div className='mb-3 form-floating '>
+                    <input
+                        type='text'
+                        {...register('name')}
+                        onChange={(event) => setName(event.target.value)}
+                        value={name}
+                        className='
+                                form-control block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+                        id='floatingInput'
+                        placeholder='Nome'
+                    />
+                    <label htmlFor='floatingInput' className='text-gray-700'>
+                        Nome
+                    </label>
+                </div>
+
                 <label className='label'>
-                    <span className='label-text'>Descrição</span>
                     {errors.description?.message && (
                         <p className='text-sm text-red-500 '>* {errors.description?.message}</p>
                     )}
                 </label>
-                <textarea
-                    className='mb-2 textarea textarea-bordered'
-                    placeholder='descrição do produto'
-                    {...register('description')}
-                    onChange={(event) => setDescription(event.target.value)}
-                    value={description}
-                ></textarea>
-                <label className='label'>
-                    <span className='label-text'>Quantidade</span>
+
+                <div className='mb-3 form-floating '>
+                    <textarea
+                        {...register('description')}
+                        onChange={(event) => setDescription(event.target.value)}
+                        value={description}
+                        className='
+                                form-control
+                                block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+                            '
+                        id='exampleFormControlTextarea1'
+                        placeholder='Descrição do produto'
+                        rows={3}
+                    ></textarea>
+
+                    <label htmlFor='floatingInput' className='text-gray-700'>
+                        Descrição do produto
+                    </label>
+                </div>
+
+                <label className='flex label'>
                     {errors.amount?.message && (
                         <p className='text-sm text-red-500 '>* {errors.amount?.message}</p>
                     )}
                 </label>
-                <input
-                    type='number'
-                    placeholder='quantidade de produto'
-                    className='mb-2 input input-bordered'
-                    {...register('amount')}
-                    onChange={(event) => setAmount(event.target.value)}
-                    value={amount}
-                />
-                <label className='label'>
-                    <span className='label-text'>Preço</span>
+                <div className='mb-3 form-floating '>
+                    <input
+                        type='text'
+                        {...register('amount')}
+                        onChange={(event) => setAmount(event.target.value)}
+                        value={amount}
+                        className='
+                                form-control block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+                        id='floatingInput'
+                        placeholder='Nome'
+                    />
+                    <label htmlFor='floatingInput' className='text-gray-700'>
+                        Quantidade
+                    </label>
+                </div>
+
+                <label className='flex label'>
                     {errors.price?.message && (
                         <p className='text-sm text-red-500 '>* {errors.price?.message}</p>
                     )}
                 </label>
-                {/*  <input 
-                    type="number" 
-                    placeholder='preço do produto'
-                    className="mb-2 input input-bordered"
-                    {...register('price')}
-                    onChange={event => setPrice(event.target.value)}
-                    value={price}
-                /> */}
-
-                <CurrencyFormat
-                    placeholder='preço do produto'
-                    className='mb-2 input input-bordered'
-                    {...register('price')}
-                    thousandSeparator={true}
-                    prefix={'R$ '}
-                    value={price ? price : 0}
-                    onValueChange={(values: any) => {
-                        const { formattedValue, floatValue, value } = values;
-                        Number(setPrice(floatValue));
-                    }}
-                />
+                <div className='mb-3 form-floating '>
+                    <CurrencyFormat
+                        className='
+                                form-control block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+                        id='floatingInput'
+                        onValueChange={(values: any) => {
+                            const { formattedValue, floatValue, value } = values;
+                            Number(setPrice(floatValue));
+                        }}
+                        thousandSeparator={true}
+                        prefix={'R$ '}
+                        value={price ? price : ''}
+                        placeholder='Preço'
+                    />
+                    <label htmlFor='floatingInput' className='text-gray-700'>
+                        Preço
+                    </label>
+                </div>
 
                 {categories?.length !== 0 && categories !== null && (
                     <>
                         <label className='label'>
-                            <span className='label-text'>Categoria</span>
+                            <span className='label-text'>Selecione a categoria</span>
                         </label>
-                        <select
-                            className='w-full bg-gray-100 select'
-                            {...register('category_id')}
-                            onChange={(event) => setCategoryId(event.target.value)}
-                            value={categoryId}
-                        >
-                            {categories &&
-                                categories.map((category) => (
-                                    <>
-                                        <option key={category.id} value={category.id}>
-                                            {category.name}
-                                        </option>
-                                    </>
-                                ))}
-                        </select>
-                        <div className='my-4 sm:flex'>
-                            {!loading ? (
-                                <button
-                                    type='submit'
-                                    className='mb-2 mr-6 btn-block btn sm:btn-wide btn-sm'
+
+                        <div className='flex justify-center'>
+                            <div className='w-full mb-3'>
+                                <select
+                                    {...register('category_id')}
+                                    onChange={(event) => setCategoryId(event.target.value)}
+                                    value={categoryId}
+                                    className='block w-full px-3 py-4 m-0 text-base font-normal text-gray-700 transition ease-in-out bg-white bg-no-repeat border border-gray-300 border-solid rounded appearance-none form-select bg-clip-padding focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+                                    aria-label='Default select example'
                                 >
-                                    {state ? 'Atualizar' : 'Salvar'}
-                                </button>
-                            ) : (
-                                <button
-                                    type='submit'
-                                    className='mb-2 mr-6 btn-block btn sm:btn-wide btn-sm loading disabled'
-                                ></button>
-                            )}
-                            <Link to={'/produtos'}>
-                                <button
-                                    type='submit'
-                                    className='mr-6 btn-block btn btn-outline sm:btn-wide btn-sm'
-                                >
-                                    Cancelar
-                                </button>
-                            </Link>
+                                    {categories &&
+                                        categories.map((category) => (
+                                            <option key={category.id} value={category.id}>
+                                                {category.name}
+                                            </option>
+                                        ))}
+                                </select>
+                            </div>
+                        </div>
+                        <div className='my-4 sm:flex '>
+                            <div className='w-full sm:mr-2'>
+                                {!loading ? (
+                                    <button
+                                        type='submit'
+                                        className='mb-2 w-full inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
+                                    >
+                                        {state ? 'Atualizar' : 'Salvar'}
+                                    </button>
+                                ) : (
+                                    <button
+                                        type='submit'
+                                        className='inline-block mb-2 w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out pointer-events-none opacity-60'
+                                        disabled
+                                    >
+                                        {state ? 'Atualizar' : 'Salvar'}
+                                    </button>
+                                )}
+                            </div>
+                            <div className='w-full sm:ml-2'>
+                                <Link to={'/categorias'}>
+                                    <button
+                                        type='submit'
+                                        className='inline-block w-full px-6 py-2 text-xs font-medium leading-normal text-blue-600 uppercase transition duration-150 ease-in-out border-2 border-blue-600 rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0'
+                                    >
+                                        Cancelar
+                                    </button>
+                                </Link>
+                            </div>
                         </div>
                     </>
                 )}
