@@ -19,7 +19,6 @@ const Header = ({ children }: IProps) => {
     const userName = auth.user?.user_metadata?.name;
 
     const [menuAction, setMenuAction] = useState(false);
-    console.log(menuAction);
 
     const openStore = () => {
         window.open(`/public-poducts/${auth.user.id}`);
