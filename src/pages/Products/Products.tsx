@@ -9,7 +9,7 @@ import { RiAddFill, RiDeleteBin2Line } from 'react-icons/ri';
 import { GrView } from 'react-icons/gr';
 import Modal from 'components/Modal';
 import Spinner from 'components/Spinner';
-import { formatReal } from 'utils/formatCurrent';
+import { formatReal } from 'utils/formatReal';
 
 type Product = {
     amount: number;
