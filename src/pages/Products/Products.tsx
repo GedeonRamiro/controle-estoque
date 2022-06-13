@@ -139,11 +139,17 @@ const Products = () => {
                                                                     {product.name}
                                                                 </p>
                                                                 <p>{product.description}</p>
-                                                                <p className='mt-4 mb-2 font-semibold '>
-                                                                    Preço: {product.price}
+                                                                <p className='mt-4 mb-2'>
+                                                                    Preço:{' '}
+                                                                    <span className='font-semibold '>
+                                                                        {formatReal(product.price)}
+                                                                    </span>
                                                                 </p>
-                                                                <p className='mb-2 font-semibold'>
-                                                                    Quantidade: {product.amount}
+                                                                <p className='mb-2'>
+                                                                    Quantidade:{' '}
+                                                                    <span className='font-semibold '>
+                                                                        {product.amount}
+                                                                    </span>
                                                                 </p>
                                                             </div>
                                                         </div>
