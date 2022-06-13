@@ -9,6 +9,7 @@ import { RiAddFill, RiDeleteBin2Line } from 'react-icons/ri';
 import { GrView } from 'react-icons/gr';
 import Modal from 'components/Modal';
 import Spinner from 'components/Spinner';
+import { formatReal } from 'utils/formatCurrent';
 
 type Product = {
     amount: number;
@@ -29,10 +30,6 @@ const Products = () => {
 
     const [products, setProducts] = useState<Product[] | null>(null);
     const [loading, setLoading] = useState(false);
-
-    const formatReal = (money: number) => {
-        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(money);
-    };
 
     const getProducts = async () => {
         const { data, error } = await supabase
