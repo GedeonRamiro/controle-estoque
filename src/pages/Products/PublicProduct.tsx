@@ -171,10 +171,6 @@ const PublicProduct = () => {
                 {config?.name}
             </h1>
 
-            {/*   <Modal id='ola' open={<p> oi </p>} btnAction='Confirmar'>
-                <div>funciona modal</div>
-            </Modal> */}
-
             <div className='justify-between flex-1 mx-4 mt-10 sm:mx-0 sm:flex'>
                 <h1 className='text-2xl border-b-4 border-green-500 sm:text-4xl w-min'>Produtos</h1>
                 <input
@@ -272,19 +268,20 @@ const PublicProduct = () => {
                     </>
                 )}
             </div>
-            <div className='grid gap-10 my-4 lg:gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4'>
+            <div className='grid grid-cols-2 gap-4 mx-4 my-4 sm:gap-10 sm:mx-0 lg:gap-4 md:grid-cols-2 lg:grid-cols-4'>
                 {productsCategory &&
                     productsCategory
                         .map((product) => (
                             <div key={product.id}>
                                 <label htmlFor={`my-modal${product.id}`} className='cursor-pointer'>
-                                    <div className='mx-4 shadow-xl sm:mx-0 card bg-base-100'>
-                                        <div className='w-full h-80 avatar'>
+                                    <div className='shadow-xl sm:mx-0 bg-base-100'>
+                                        <div className='object-cover w-full h-32 sm:h-80 avatar'>
                                             <img src={product.img_url} alt={product.name} />
                                         </div>
-                                        <div className='text-center card-body'>
-                                            <h2 className='card-title'>{product.name}</h2>
-                                            <p className='font-semibold'>
+                                        <div className='pb-4 ml-2'>
+                                            <h2 className=''>{product.name}</h2>
+
+                                            <p className='text-lg font-bold sm:text-xl'>
                                                 {' '}
                                                 {formatReal(product.price)}
                                             </p>
