@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { config } from 'process';
 import { Link, useNavigate } from 'react-router-dom';
+import Spinner from 'components/Spinner';
 
 type Inputs = {
     name: string;
@@ -73,6 +74,8 @@ const ConfigStore = () => {
     };
 
     const createConfig: SubmitHandler<Inputs> = async (dataConfig: Inputs) => {
+        setLoading(false);
+
         const { error } = await supabase
             .from('config')
             .insert({ ...dataConfig, phone, user_id: id })
@@ -87,9 +90,12 @@ const ConfigStore = () => {
             });
             navigate('/');
         }
+        setLoading(true);
     };
 
     const editConfig: SubmitHandler<Inputs> = async (editConfig: Inputs) => {
+        setLoading(false);
+
         const { error } = await supabase
             .from('config')
             .update({ ...editConfig, phone })
@@ -107,6 +113,7 @@ const ConfigStore = () => {
             });
             navigate('/');
         }
+        setLoading(true);
     };
 
     useEffect(() => {
@@ -115,87 +122,121 @@ const ConfigStore = () => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth]);
+    }, [auth, loading]);
 
     return (
         <Header>
             {loading && (
                 <form
                     onSubmit={handleSubmit(configDB?.length ? editConfig : createConfig)}
-                    className='form-control'
+                    className='mx-2 mt-4 sm:mt-10'
                 >
                     <label className='text-center label'>
                         <span className='font-bold uppercase mb-7'> Configurações da Loja </span>
                     </label>
                     <label className='flex label'>
-                        <span className='label-text'>Nome</span>
                         {errors.name?.message && (
                             <p className='text-sm text-red-500 '>* {errors.name?.message}</p>
                         )}
                     </label>
-                    <input
-                        type='text'
-                        placeholder='nome'
-                        className='mb-2 input input-bordered'
-                        {...register('name')}
-                        onChange={(event) => setName(event.target.value)}
-                        value={name}
-                    />
-                    <label className='mt-2 label'>
-                        <span className='label-text'>Telefone</span>
-                        {errors.phone?.message && (
-                            <p className='absolute mt-10 text-sm text-red-500'>
-                                * {errors.phone?.message}
-                            </p>
-                        )}
-                    </label>
-                    {/*  <input 
-                    type="text" 
-                    placeholder='Telefone'
-                    className="input input-bordered" {...register('phone')}
-                    onChange={event => setPhone(event.target.value)}
-                    value={phone}
-                /> */}
-                    <CurrencyFormat
-                        placeholder='Telefone'
-                        className='input input-bordered'
-                        value={phone}
-                        onValueChange={(values: any) => {
-                            const { formattedValue, floatValue, value } = values;
-                            String(setPhone(value));
-                        }}
-                        format='(##) #####-####'
-                        mask='_'
-                    />
-                    <div className='my-4 sm:flex'>
-                        {loading ? (
-                            <button
-                                type='submit'
-                                className='mb-2 mr-6 btn-block btn sm:btn-wide btn-sm'
-                            >
-                                {configDB?.length ? 'Atualizar' : 'Salvar'}
-                            </button>
-                        ) : (
-                            <button
-                                type='submit'
-                                className='mb-2 mr-6 btn-block btn sm:btn-wide btn-sm loading disabled'
-                            ></button>
-                        )}
-                        <Link to={'/'}>
-                            <button
-                                type='submit'
-                                className='mr-6 btn-block btn btn-outline sm:btn-wide btn-sm'
-                            >
-                                Cancelar
-                            </button>
-                        </Link>
+
+                    <div className='mb-3 form-floating '>
+                        <input
+                            type='text'
+                            {...register('name')}
+                            onChange={(event) => setName(event.target.value)}
+                            value={name}
+                            className='
+                                form-control block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+                            id='floatingInput'
+                            placeholder='Nome'
+                        />
+                        <label htmlFor='floatingInput' className='text-gray-700'>
+                            Nome
+                        </label>
+                    </div>
+
+                    <div className='mb-3 form-floating '>
+                        <CurrencyFormat
+                            className='form-control block
+                            w-full
+                            px-3
+                            py-1.5
+                            text-base
+                            font-normal
+                            text-gray-700
+                            bg-white bg-clip-padding
+                            border border-solid border-gray-300
+                            rounded
+                            transition
+                            ease-in-out
+                            m-0
+                            focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+                            value={phone}
+                            onValueChange={(values: any) => {
+                                const { formattedValue, floatValue, value } = values;
+                                String(setPhone(value));
+                            }}
+                            format='(##) #####-####'
+                            mask='_'
+                            id='floatingInput'
+                            placeholder='Telefone'
+                        />
+
+                        <label htmlFor='floatingInput' className='text-gray-700'>
+                            Telefone
+                        </label>
+                    </div>
+
+                    <div className='my-4 sm:flex '>
+                        <div className='w-full sm:mr-2'>
+                            {loading ? (
+                                <button
+                                    type='submit'
+                                    className='mb-2 w-full inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
+                                >
+                                    {configDB?.length ? 'Atualizar' : 'Salvar'}
+                                </button>
+                            ) : (
+                                <button
+                                    type='submit'
+                                    className='inline-block mb-2 w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out pointer-events-none opacity-60'
+                                    disabled
+                                >
+                                    {configDB?.length ? 'Atualizar' : 'Salvar'}
+                                </button>
+                            )}
+                        </div>
+                        <div className='w-full sm:ml-2'>
+                            <Link to={'/categorias'}>
+                                <button
+                                    type='submit'
+                                    className='inline-block w-full px-6 py-2 text-xs font-medium leading-normal text-blue-600 uppercase transition duration-150 ease-in-out border-2 border-blue-600 rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0'
+                                >
+                                    Cancelar
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 </form>
             )}
             {!loading && (
-                <div className='absolute inset-0 flex flex-col items-center justify-center'>
-                    <button className='btn btn-sm btn-ghost loading'>loading</button>
-                </div>
+                <>
+                    <Spinner />
+                </>
             )}
         </Header>
     );
