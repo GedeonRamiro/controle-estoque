@@ -10,8 +10,6 @@ type Props = {
 };
 
 const Modal = ({ id, nameBtnOpen, styleBtnOpen, btnAction, children, onClick }: Props) => {
-    console.log(Modal);
-
     return (
         <div>
             <label htmlFor={`my-modal${id}`} className={styleBtnOpen}>

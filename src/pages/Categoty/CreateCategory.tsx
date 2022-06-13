@@ -46,8 +46,6 @@ const CreateCategory = () => {
         resolver: yupResolver(schema),
     });
 
-    console.log(errors);
-
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState(state ? state.name : '');
 
@@ -114,20 +112,21 @@ const CreateCategory = () => {
                             {...register('name')}
                             onChange={(event) => setName(event.target.value)}
                             value={name}
-                            className='form-control block
-      w-full
-      px-3
-      py-1.5
-      text-base
-      font-normal
-      text-gray-700
-      bg-white bg-clip-padding
-      border border-solid border-gray-300
-      rounded
-      transition
-      ease-in-out
-      m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
+                            className='
+                                form-control block
+                                w-full
+                                px-3
+                                py-1.5
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded
+                                transition
+                                ease-in-out
+                                m-0
+                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
                             id='floatingInput'
                             placeholder='Nome'
                         />
@@ -149,7 +148,7 @@ const CreateCategory = () => {
                         ) : (
                             <button
                                 type='submit'
-                                className='inline-block mx-2 w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out pointer-events-none opacity-60'
+                                className='inline-block mb-2 w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md focus:outline-none focus:ring-0 transition duration-150 ease-in-out pointer-events-none opacity-60'
                                 disabled
                             >
                                 {state ? 'Atualizar' : 'Salvar'}
