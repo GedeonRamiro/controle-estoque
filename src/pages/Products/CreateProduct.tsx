@@ -246,31 +246,23 @@ const CreateProduct = () => {
                         {...register('description')}
                         onChange={(event) => setDescription(event.target.value)}
                         value={description}
-                        className='
-                                form-control
-                                block
-                                w-full
-                                px-3
-                                py-1.5
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                                focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-                            '
-                        id='exampleFormControlTextarea1'
-                        placeholder='Descrição do produto'
+                        className=' block
+                        w-full
+                        px-3
+                        py-1.5
+                        text-base
+                        font-normal
+                        text-gray-700
+                        bg-white bg-clip-padding
+                        border border-solid border-gray-300
+                        rounded
+                        transition
+                        ease-in-out
+                        m-0
+                        focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
                         rows={3}
+                        placeholder='Descrição do Produto'
                     ></textarea>
-
-                    <label htmlFor='floatingInput' className='text-gray-700'>
-                        Descrição do produto
-                    </label>
                 </div>
 
                 <label className='flex label'>
@@ -300,7 +292,7 @@ const CreateProduct = () => {
                                 m-0
                                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none'
                         id='floatingInput'
-                        placeholder='Nome'
+                        placeholder='Quantidade'
                     />
                     <label htmlFor='floatingInput' className='text-gray-700'>
                         Quantidade
