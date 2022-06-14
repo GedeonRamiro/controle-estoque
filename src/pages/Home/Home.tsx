@@ -91,6 +91,7 @@ const Home = () => {
                     <span className='visually-hidden'>Next</span>
                 </button>
             </div>
+
             <div className='flex justify-center my-10'>
                 <div className='block max-w-sm p-6 bg-white rounded-lg shadow-lg'>
                     <h5 className='mb-2 text-xl font-medium leading-tight text-gray-900'>

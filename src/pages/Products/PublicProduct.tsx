@@ -6,6 +6,7 @@ import useDebounce from 'components/useDebounce';
 import { AiOutlineWhatsApp } from 'react-icons/ai';
 import React from 'react';
 import Modal from '../../components/Modal';
+import { formatReal } from 'utils/formatReal';
 
 type ParamsId = {
     id: string;
@@ -68,11 +69,7 @@ const PublicProduct = () => {
                     &text='Olá, fiquei interessado no produto: 
                     ${product.name} - 
                     ${formatReal(product.price)} - 
-                    ${url}'`);
-    };
-
-    const formatReal = (money: number) => {
-        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(money);
+                    ${url}`);
     };
 
     const handleChangeSearchTerm = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -167,6 +164,72 @@ const PublicProduct = () => {
 
     return (
         <div className='container mx-auto'>
+            <div
+                id='carouselExampleCaptions'
+                className='relative my-4 lg:my-10 carousel slide'
+                data-bs-ride='carousel'
+            >
+                <div className='absolute bottom-0 left-0 right-0 flex justify-center p-0 mb-4 carousel-indicators'>
+                    {products &&
+                        products.map((product, index) => (
+                            <button
+                                type='button'
+                                data-bs-target='#carouselExampleCaptions'
+                                data-bs-slide-to={index}
+                                className={index === 0 ? 'active' : ''}
+                                aria-current={index === 0 ? 'true' : undefined}
+                                aria-label={`Slide ${index}`}
+                            ></button>
+                        ))}
+                </div>
+                <div className='relative w-full overflow-hidden carousel-inner'>
+                    {products &&
+                        products.map((product, index) => (
+                            <div
+                                className={`relative float-left w-full carousel-item ${
+                                    index === 0 && `active`
+                                }`}
+                            >
+                                <img
+                                    src={product.img_url}
+                                    className='block object-cover w-full h-48 sm:h-96'
+                                    alt={product.name}
+                                />
+
+                                {/*  <div className='absolute text-lg text-center carousel-caption'>
+                                    <h5 className='text-xl '>{product.name}</h5>
+                                    <p className=''>{formatReal(product.price)}</p>
+                                </div> */}
+                            </div>
+                        ))}
+                </div>
+
+                <button
+                    className='absolute top-0 bottom-0 left-0 flex items-center justify-center p-0 text-center border-0 carousel-control-prev hover:outline-none hover:no-underline focus:outline-none focus:no-underline'
+                    type='button'
+                    data-bs-target='#carouselExampleCaptions'
+                    data-bs-slide='prev'
+                >
+                    <span
+                        className='inline-block bg-no-repeat carousel-control-prev-icon'
+                        aria-hidden='true'
+                    ></span>
+                    <span className='visually-hidden'>Previous</span>
+                </button>
+                <button
+                    className='absolute top-0 bottom-0 right-0 flex items-center justify-center p-0 text-center border-0 carousel-control-next hover:outline-none hover:no-underline focus:outline-none focus:no-underline'
+                    type='button'
+                    data-bs-target='#carouselExampleCaptions'
+                    data-bs-slide='next'
+                >
+                    <span
+                        className='inline-block bg-no-repeat carousel-control-next-icon'
+                        aria-hidden='true'
+                    ></span>
+                    <span className='visually-hidden'>Next</span>
+                </button>
+            </div>
+
             <h1 className='p-2 mt-6 text-3xl font-bold text-center sm:mt-20 sm:text-4xl'>
                 {config?.name}
             </h1>
@@ -276,7 +339,11 @@ const PublicProduct = () => {
                                 <label htmlFor={`my-modal${product.id}`} className='cursor-pointer'>
                                     <div className='shadow-xl sm:mx-0 bg-base-100'>
                                         <div className='object-cover w-full h-32 sm:h-80 avatar'>
-                                            <img src={product.img_url} alt={product.name} />
+                                            <img
+                                                src={product.img_url}
+                                                alt={product.name}
+                                                className='rounded-t'
+                                            />
                                         </div>
                                         <div className='pb-4 ml-2'>
                                             <h2 className=''>{product.name}</h2>
