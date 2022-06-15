@@ -20,7 +20,7 @@ const Modal = ({ id, nameBtnOpen, styleBtnOpen, btnAction, children, onClick }: 
             <div className='flex items-center p-4 modal'>
                 <div className='relative modal-box'>
                     {children}
-                    <div className='flex justify-center '>
+                    <div className='flex items-center justify-center'>
                         <label
                             className='inline-block px-6 py-2 mx-2 text-xs font-medium leading-tight text-blue-600 uppercase transition duration-150 ease-in-out border-2 border-blue-600 rounded cursor-pointer hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0'
                             htmlFor={`my-modal${id}`}

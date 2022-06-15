@@ -164,78 +164,12 @@ const PublicProduct = () => {
 
     return (
         <div className='container mx-auto'>
-            <div
-                id='carouselExampleCaptions'
-                className='relative my-4 lg:my-10 carousel slide'
-                data-bs-ride='carousel'
-            >
-                <div className='absolute bottom-0 left-0 right-0 flex justify-center p-0 mb-4 carousel-indicators'>
-                    {products &&
-                        products.map((product, index) => (
-                            <button
-                                type='button'
-                                data-bs-target='#carouselExampleCaptions'
-                                data-bs-slide-to={index}
-                                className={index === 0 ? 'active' : ''}
-                                aria-current={index === 0 ? 'true' : undefined}
-                                aria-label={`Slide ${index}`}
-                            ></button>
-                        ))}
-                </div>
-                <div className='relative w-full overflow-hidden carousel-inner'>
-                    {products &&
-                        products.map((product, index) => (
-                            <div
-                                className={`relative float-left w-full carousel-item ${
-                                    index === 0 && `active`
-                                }`}
-                            >
-                                <img
-                                    src={product.img_url}
-                                    className='block object-cover w-full h-48 sm:h-96'
-                                    alt={product.name}
-                                />
-
-                                {/*  <div className='absolute text-lg text-center carousel-caption'>
-                                    <h5 className='text-xl '>{product.name}</h5>
-                                    <p className=''>{formatReal(product.price)}</p>
-                                </div> */}
-                            </div>
-                        ))}
-                </div>
-
-                <button
-                    className='absolute top-0 bottom-0 left-0 flex items-center justify-center p-0 text-center border-0 carousel-control-prev hover:outline-none hover:no-underline focus:outline-none focus:no-underline'
-                    type='button'
-                    data-bs-target='#carouselExampleCaptions'
-                    data-bs-slide='prev'
-                >
-                    <span
-                        className='inline-block bg-no-repeat carousel-control-prev-icon'
-                        aria-hidden='true'
-                    ></span>
-                    <span className='visually-hidden'>Previous</span>
-                </button>
-                <button
-                    className='absolute top-0 bottom-0 right-0 flex items-center justify-center p-0 text-center border-0 carousel-control-next hover:outline-none hover:no-underline focus:outline-none focus:no-underline'
-                    type='button'
-                    data-bs-target='#carouselExampleCaptions'
-                    data-bs-slide='next'
-                >
-                    <span
-                        className='inline-block bg-no-repeat carousel-control-next-icon'
-                        aria-hidden='true'
-                    ></span>
-                    <span className='visually-hidden'>Next</span>
-                </button>
-            </div>
-
             <h1 className='p-2 mt-6 text-3xl font-bold text-center sm:mt-20 sm:text-4xl'>
                 {config?.name}
             </h1>
 
             <div className='justify-between flex-1 mx-4 mt-10 sm:mx-0 sm:flex'>
-                <h1 className='text-2xl border-b-4 border-green-500 sm:text-4xl w-min'>Produtos</h1>
+                <h1 className='text-2xl border-b-4 border-blue-500 sm:text-4xl w-min'>Produtos</h1>
                 <input
                     type='text'
                     placeholder='Pesquisar...'
@@ -336,64 +270,47 @@ const PublicProduct = () => {
                     productsCategory
                         .map((product) => (
                             <div key={product.id}>
-                                <label htmlFor={`my-modal${product.id}`} className='cursor-pointer'>
-                                    <div className='shadow-xl sm:mx-0 bg-base-100'>
-                                        <div className='object-cover w-full h-32 sm:h-80 avatar'>
-                                            <img
-                                                src={product.img_url}
-                                                alt={product.name}
-                                                className='rounded-t'
-                                            />
-                                        </div>
-                                        <div className='pb-4 ml-2'>
-                                            <h2 className=''>{product.name}</h2>
+                                <Modal
+                                    id={product.id}
+                                    nameBtnOpen={
+                                        <div className='shadow-xl cursor-pointer sm:mx-0 bg-base-100'>
+                                            <div className='object-cover w-full h-32 sm:h-80 avatar'>
+                                                <img
+                                                    src={product.img_url}
+                                                    alt={product.name}
+                                                    className='rounded-t'
+                                                />
+                                            </div>
+                                            <div className='pb-4 ml-2'>
+                                                <h2 className=''>{product.name}</h2>
 
-                                            <p className='text-lg font-bold sm:text-xl'>
-                                                {' '}
-                                                {formatReal(product.price)}
-                                            </p>
+                                                <p className='text-lg font-bold sm:text-xl'>
+                                                    {' '}
+                                                    {formatReal(product.price)}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </label>
-                                <input
-                                    type='checkbox'
-                                    id={`my-modal${product.id}`}
-                                    className='modal-toggle'
-                                />
-                                <div className='flex items-center px-4 modal'>
-                                    <div className=' modal-box'>
-                                        <img
-                                            className='rounded-t-lg'
-                                            src={product.img_url}
-                                            alt={product.name}
-                                        />
-                                        <h3 className='mt-4 text-lg font-bold'>{product.name}</h3>
-                                        <p className='py-4'>{product.description}</p>
-                                        <p className='text-2xl font-semibold'>
-                                            {' '}
-                                            {formatReal(product.price)}{' '}
-                                        </p>
-                                        <div className='modal-action'>
-                                            <a href={`#`}>
-                                                <label
-                                                    htmlFor={`my-modal${product.id}`}
-                                                    className='btn-success btn btn-sm sm:btn btn-outline sm:btn-outline'
-                                                >
-                                                    Cancelar
-                                                </label>
-                                            </a>
-                                            <button
-                                                onClick={() =>
-                                                    openWhatsapp(product, Number(config?.phone))
-                                                }
-                                                className='btn btn-active btn-accent btn-sm sm:btn'
-                                            >
-                                                <AiOutlineWhatsApp className='text-xl sm:text-2xl' />
-                                                <p className='ml-2'>Fazer Pedido</p>
-                                            </button>
+                                    }
+                                    btnAction={
+                                        <div className='flex items-center justify-center'>
+                                            <AiOutlineWhatsApp className='text-xl sm:text-2xl' />
+                                            <p className='ml-2'>Comprar</p>
                                         </div>
-                                    </div>
-                                </div>
+                                    }
+                                    onClick={() => openWhatsapp(product, Number(config?.phone))}
+                                >
+                                    <img
+                                        className='rounded-t-lg'
+                                        src={product.img_url}
+                                        alt={product.name}
+                                    />
+                                    <h3 className='mt-4 text-lg font-bold'>{product.name}</h3>
+                                    <p className='py-4'>{product.description}</p>
+                                    <p className='mb-6 text-2xl font-semibold'>
+                                        {' '}
+                                        {formatReal(product.price)}{' '}
+                                    </p>
+                                </Modal>
                             </div>
                         ))
                         .slice(0, numberFinaly)}
