@@ -106,7 +106,7 @@ const Login = () => {
                         data-mdb-ripple-color='light'
                         style={{
                             background:
-                                'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
+                                'linear-gradient(to right, #68b4ee, #4a92eb, #2275da, #0d5ab8)',
                         }}
                         disabled={loading}
                     >

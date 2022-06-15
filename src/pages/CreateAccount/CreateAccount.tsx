@@ -72,7 +72,7 @@ const CreateAccount = () => {
 
     return (
         <Account
-            buttonAccountPage='Login'
+            buttonAccountPage='Entar'
             textAccountPage='Já tem conta? Entar agora'
             linkAccountPage='/login'
             textFrom='Crie sua conta agora mesmo'
@@ -123,7 +123,7 @@ const CreateAccount = () => {
                         data-mdb-ripple-color='light'
                         style={{
                             background:
-                                'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
+                                'linear-gradient(to right, #68b4ee, #4a92eb, #2275da, #0d5ab8)',
                         }}
                         disabled={loading}
                     >

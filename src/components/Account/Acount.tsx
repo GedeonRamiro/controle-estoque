@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import logo from 'assets/images/logo.png';
 
 type Props = {
     children: React.ReactNode;
@@ -24,13 +25,9 @@ const Account = ({
                             <div className='lg:flex lg:flex-wrap g-0'>
                                 <div className='px-4 lg:w-6/12 md:px-0'>
                                     <div className='md:p-12 md:mx-6'>
-                                        <div className='text-center'>
-                                            <img
-                                                className='w-48 mx-auto'
-                                                src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp'
-                                                alt='logo'
-                                            />
-                                            <h4 className='pb-1 mt-1 mb-12 text-xl font-semibold'>
+                                        <div className='mt-4 text-center sm:mt-0'>
+                                            <img className='mx-auto w-60' src={logo} alt='logo' />
+                                            <h4 className='pb-1 mt-4 mb-12 text-xl font-semibold'>
                                                 Minha Loja Virtual
                                             </h4>
                                         </div>
@@ -46,7 +43,7 @@ const Account = ({
                                             <Link to={linkAccountPage}>
                                                 <button
                                                     type='button'
-                                                    className='inline-block px-6 py-2 text-xs font-medium leading-tight text-red-600 uppercase transition duration-150 ease-in-out border-2 border-red-600 rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0'
+                                                    className='inline-block px-6 py-2 text-xs font-medium leading-tight text-blue-600 uppercase transition duration-150 ease-in-out border-2 border-blue-600 rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0'
                                                     data-mdb-ripple='true'
                                                     data-mdb-ripple-color='light'
                                                 >
@@ -60,7 +57,7 @@ const Account = ({
                                     className='flex items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none'
                                     style={{
                                         background:
-                                            'linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)',
+                                            'linear-gradient(to right, #68b4ee, #4a92eb, #2275da, #0d5ab8)',
                                     }}
                                 >
                                     <div className='px-4 py-6 text-white md:p-12 md:mx-6'>
