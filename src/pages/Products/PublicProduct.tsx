@@ -64,12 +64,14 @@ const PublicProduct = () => {
     const debouncedSearchTerm = useDebounce(searchTerm);
 
     const openWhatsapp = (product: Product, phone: number) => {
-        const url = window.location.href;
+        //const url = window.location.href;
         window.open(`https://api.whatsapp.com/send?phone=${`+55${phone}`}
                     &text='Olá, fiquei interessado no produto: 
+                    ${product.img_url} - 
                     ${product.name} - 
+                    ${product.description} - 
                     ${formatReal(product.price)} - 
-                    ${url}`);
+                    `);
     };
 
     const handleChangeSearchTerm = (event: React.ChangeEvent<HTMLInputElement>) => {
