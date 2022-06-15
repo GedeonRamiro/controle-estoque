@@ -166,7 +166,7 @@ const PublicProduct = () => {
 
     return (
         <div className='container mx-auto'>
-            <h1 className='p-2 mt-6 text-3xl font-bold text-center sm:mt-20 sm:text-4xl'>
+            <h1 className='p-2 mx-4 mt-6 text-2xl font-bold text-center text-white bg-blue-500 border-2 border-gray-300 rounded shadow-lg sm:mx-0 sm:mt-20 sm:text-4xl'>
                 {config?.name}
             </h1>
 
