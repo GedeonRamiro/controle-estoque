@@ -1,9 +1,9 @@
 import Header from 'components/Header';
-import { FiLogOut } from 'react-icons/fi';
 
 const Home = () => {
     return (
         <Header>
+            <h1 className='my-10 text-4xl text-center text-white bg-red-500'>Em desenvolvimento</h1>
             <div
                 id='carouselExampleCaptions'
                 className='relative my-4 lg:my-10 carousel slide'
