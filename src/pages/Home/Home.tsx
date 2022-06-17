@@ -1,225 +1,206 @@
 import Header from 'components/Header';
 
+import {
+    Chart as ChartJS,
+    ArcElement,
+    Tooltip,
+    Legend,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+} from 'chart.js';
+import { Bar, Doughnut } from 'react-chartjs-2';
+import { useEffect, useState } from 'react';
+import { useAuth } from 'context/auth';
+import { useToasts } from 'react-toast-notifications';
+import { supabase } from 'services/supabase';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+
+const dataDoughnut = {
+    labels: ['Camisa', 'Sapato', 'Bermuda', 'Calça Jeans'],
+    datasets: [
+        {
+            label: 'My First Dataset',
+            data: [300, 50, 100, 34],
+            backgroundColor: [
+                'rgb(133, 105, 1)',
+                'rgb(164, 101, 2)',
+                'rgb(101, 143, 3)',
+                'rgb(177, 34, 90)',
+            ],
+            hoverOffset: 4,
+        },
+    ],
+};
+
+export const options = {
+    responsive: true,
+    plugins: {
+        legend: {
+            position: 'top' as const,
+        },
+        title: {
+            display: true,
+            text: 'Chart.js Bar Chart',
+        },
+    },
+};
+
+const labels = [
+    'Camisa',
+    'Sapato',
+    'Bermuda',
+    'Calça Jeans',
+    'Camisa',
+    'Sapato',
+    'Bermuda',
+    'Calça Jeans',
+];
+
+export const dataBar = {
+    labels,
+    datasets: [
+        {
+            label: 'Dataset 1',
+            data: [120, 65, 80, 70, 120, 65, 80, 70],
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        },
+        {
+            label: 'Dataset 2',
+            data: [67, 23.5, 67, 12, 120, 65, 80, 70],
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        },
+    ],
+};
+
+type Product = {
+    amount: number;
+    category_id: number;
+    created_at: string;
+    description: string;
+    id: number;
+    img_url: string;
+    name: string;
+    price: number;
+    user_id: string;
+};
+
+type Category = {
+    created_at: Date;
+    id: number;
+    name: string;
+    user_id: string;
+};
+
 const Home = () => {
+    const [products, setProducts] = useState<Product[] | null>(null);
+    const [categories, setCategories] = useState<Category[] | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    const auth = useAuth();
+    const { addToast } = useToasts();
+
+    const resultProducts = products?.map((product) => product.category_id);
+    console.log('resultProducts:', resultProducts);
+
+    const resultCategories = categories?.map((category) => {
+        const result = {
+            category: category.name,
+            id: category.id,
+        };
+
+        return result;
+    });
+
+    console.log('resultCategories:', resultCategories);
+
+    const resultCharts = resultCategories?.map((resultC) => {
+        const result = {
+            category: resultC.category,
+            quantidadeproduto: resultProducts?.map((product) => product === resultC.id),
+        };
+
+        return result;
+    });
+
+    console.log('resultCharts:', resultCharts);
+
+    const getProducts = async () => {
+        const { data, error } = await supabase
+            .from('product')
+            .select('*')
+            .eq('user_id', auth.user.id);
+
+        if (error) {
+            return addToast(error.message, { appearance: 'error', autoDismiss: true });
+        }
+
+        setProducts(data);
+        setLoading(true);
+    };
+
+    const getCategories = async () => {
+        const { data, error } = await supabase
+            .from('category')
+            .select('*')
+            .eq('user_id', auth.user.id);
+
+        if (error) {
+            return addToast(error.message, { appearance: 'error', autoDismiss: true });
+        }
+
+        setCategories(data);
+        setLoading(true);
+    };
+
+    console.log(categories);
+
+    useEffect(() => {
+        if (auth.user.id) {
+            getProducts();
+            getCategories();
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [auth]);
+
     return (
         <Header>
-            <h1 className='my-10 text-4xl text-center text-white bg-red-500'>Em desenvolvimento</h1>
-            <div
-                id='carouselExampleCaptions'
-                className='relative my-4 lg:my-10 carousel slide'
-                data-bs-ride='carousel'
-            >
-                <div className='absolute bottom-0 left-0 right-0 flex justify-center p-0 mb-4 carousel-indicators'>
-                    <button
-                        type='button'
-                        data-bs-target='#carouselExampleCaptions'
-                        data-bs-slide-to='0'
-                        className='active'
-                        aria-current='true'
-                        aria-label='Slide 1'
-                    ></button>
-                    <button
-                        type='button'
-                        data-bs-target='#carouselExampleCaptions'
-                        data-bs-slide-to='1'
-                        aria-label='Slide 2'
-                    ></button>
-                    <button
-                        type='button'
-                        data-bs-target='#carouselExampleCaptions'
-                        data-bs-slide-to='2'
-                        aria-label='Slide 3'
-                    ></button>
-                </div>
-                <div className='relative w-full overflow-hidden carousel-inner'>
-                    <div className='relative float-left w-full carousel-item active'>
-                        <img
-                            src='https://mdbootstrap.com/img/Photos/Slides/img%20(15).jpg'
-                            className='block w-full'
-                            alt='...'
-                        />
-                        <div className='absolute hidden text-center carousel-caption md:block'>
-                            <h5 className='text-xl'>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
+            <div className='pb-6 bg-gray-100'>
+                <div className='pt-1 sm:pt-10 sm:flex sm:justify-evenly'>
+                    <div className='block w-full p-6 mx-0 my-2 bg-white rounded-lg shadow-lg sm:mx-4 sm:my-0'>
+                        <h5 className='py-3 mb-2 text-lg font-medium leading-tight text-gray-900 uppercase border-b border-gray-300 sm:text-xl'>
+                            Total de categorias
+                        </h5>
+                        <p className='mb-4 text-2xl text-gray-700 sm:text-3xl'>
+                            {categories?.length}
+                        </p>
                     </div>
-                    <div className='relative float-left w-full carousel-item'>
-                        <img
-                            src='https://mdbootstrap.com/img/Photos/Slides/img%20(22).jpg'
-                            className='block w-full'
-                            alt='...'
-                        />
-                        <div className='absolute hidden text-center carousel-caption md:block'>
-                            <h5 className='text-xl'>Second slide label</h5>
-                            <p>Some representative placeholder content for the second slide.</p>
-                        </div>
-                    </div>
-                    <div className='relative float-left w-full carousel-item'>
-                        <img
-                            src='https://mdbootstrap.com/img/Photos/Slides/img%20(23).jpg'
-                            className='block w-full'
-                            alt='...'
-                        />
-                        <div className='absolute hidden text-center carousel-caption md:block'>
-                            <h5 className='text-xl'>Third slide label</h5>
-                            <p>Some representative placeholder content for the third slide.</p>
-                        </div>
-                    </div>
-                </div>
-                <button
-                    className='absolute top-0 bottom-0 left-0 flex items-center justify-center p-0 text-center border-0 carousel-control-prev hover:outline-none hover:no-underline focus:outline-none focus:no-underline'
-                    type='button'
-                    data-bs-target='#carouselExampleCaptions'
-                    data-bs-slide='prev'
-                >
-                    <span
-                        className='inline-block bg-no-repeat carousel-control-prev-icon'
-                        aria-hidden='true'
-                    ></span>
-                    <span className='visually-hidden'>Previous</span>
-                </button>
-                <button
-                    className='absolute top-0 bottom-0 right-0 flex items-center justify-center p-0 text-center border-0 carousel-control-next hover:outline-none hover:no-underline focus:outline-none focus:no-underline'
-                    type='button'
-                    data-bs-target='#carouselExampleCaptions'
-                    data-bs-slide='next'
-                >
-                    <span
-                        className='inline-block bg-no-repeat carousel-control-next-icon'
-                        aria-hidden='true'
-                    ></span>
-                    <span className='visually-hidden'>Next</span>
-                </button>
-            </div>
 
-            <div className='flex justify-center my-10'>
-                <div className='block max-w-sm p-6 bg-white rounded-lg shadow-lg'>
-                    <h5 className='mb-2 text-xl font-medium leading-tight text-gray-900'>
-                        Card title
+                    <div className='block w-full p-6 mx-0 my-2 bg-white rounded-lg shadow-lg sm:mx-4 sm:my-0'>
+                        <h5 className='py-3 text-lg font-medium leading-tight text-gray-900 uppercase border-b border-gray-300 sm:text-xl'>
+                            Total de produtos
+                        </h5>
+                        <p className='mb-4 text-2xl text-gray-700 sm:text-3xl'>
+                            {products?.length}
+                        </p>
+                    </div>
+                </div>
+
+                <div className='max-w-6xl p-6 mx-auto mt-0 bg-white rounded-lg shadow-lg sm:mt-10'>
+                    <h5 className='py-3 mb-2 text-xl font-medium leading-tight text-center text-gray-900 uppercase border-b border-gray-300'>
+                        categorias/Produtos
                     </h5>
-                    <p className='mb-4 text-base text-gray-700'>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
-                    </p>
-                    <button
-                        type='button'
-                        className=' inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out'
-                    >
-                        Button
-                    </button>
+                    <Doughnut data={dataDoughnut} />
                 </div>
-            </div>
 
-            <div className='flex flex-col'>
-                <div className='overflow-x-auto sm:-mx-6 lg:-mx-8'>
-                    <div className='inline-block min-w-full py-2 sm:px-6 lg:px-8'>
-                        <div className='overflow-hidden'>
-                            <table className='min-w-full'>
-                                <thead className='bg-white border-b'>
-                                    <tr>
-                                        <th
-                                            scope='col'
-                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
-                                        >
-                                            #
-                                        </th>
-                                        <th
-                                            scope='col'
-                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
-                                        >
-                                            First
-                                        </th>
-                                        <th
-                                            scope='col'
-                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
-                                        >
-                                            Last
-                                        </th>
-                                        <th
-                                            scope='col'
-                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
-                                        >
-                                            Handle
-                                        </th>
-                                        <th
-                                            scope='col'
-                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
-                                        >
-                                            First
-                                        </th>
-                                        <th
-                                            scope='col'
-                                            className='px-6 py-4 text-sm font-medium text-left text-gray-900'
-                                        >
-                                            Last
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr className='bg-gray-100 border-b'>
-                                        <td className='px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap'>
-                                            1
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            Mark
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            Otto
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            @mdo
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            @mdo
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            @mdo
-                                        </td>
-                                    </tr>
-                                    <tr className='bg-white border-b'>
-                                        <td className='px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap'>
-                                            2
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            Jacob
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            Thornton
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            @fat
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            Thornton
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            @fat
-                                        </td>
-                                    </tr>
-                                    <tr className='bg-white border-b'>
-                                        <td className='px-6 py-4 text-sm font-medium text-gray-900 whitespace-nowrap'>
-                                            2
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            Jacob
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            Thornton
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            @fat
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            Thornton
-                                        </td>
-                                        <td className='px-6 py-4 text-sm font-light text-gray-900 whitespace-nowrap'>
-                                            @fat
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div className='max-w-6xl p-6 mx-auto mt-2 bg-white rounded-lg shadow-lg sm:mt-10 '>
+                    <h5 className='py-3 mb-2 text-xl font-medium leading-tight text-center text-gray-900 uppercase border-b border-gray-300'>
+                        Barato/Caro
+                    </h5>
+                    <Bar options={options} data={dataBar} />
                 </div>
             </div>
         </Header>
