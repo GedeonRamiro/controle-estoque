@@ -94,7 +94,7 @@ const Categoty = () => {
                                 )}
                                 {categories &&
                                     categories.map((category, index) => (
-                                        <tbody>
+                                        <tbody key={category.id}>
                                             <tr
                                                 className={` border-b ${
                                                     index % 2 === 0 ? 'bg-gray-100' : 'bg-white'

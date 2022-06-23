@@ -98,7 +98,7 @@ const Products = () => {
                                 )}
                                 {products &&
                                     products.map((product, index) => (
-                                        <tbody>
+                                        <tbody key={product.id}>
                                             <tr
                                                 className={` border-b ${
                                                     index % 2 === 0 ? 'bg-gray-100' : 'bg-white'
