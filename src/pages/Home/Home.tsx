@@ -29,8 +29,6 @@ const Home = () => {
         return result;
     });
 
-    console.log(resultProducts);
-
     const produtosAgrupadosProcategorias = resultProducts
         ?.map((product) => {
             const result = {
@@ -49,8 +47,6 @@ const Home = () => {
             (produto, index, array) =>
                 index === array.findIndex((item) => item.category === produto.category)
         );
-
-    console.log(produtosAgrupadosProcategorias);
 
     const getProducts = async () => {
         const { data, error } = await supabase
