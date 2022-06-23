@@ -10,18 +10,7 @@ import { GrView } from 'react-icons/gr';
 import Modal from 'components/Modal';
 import Spinner from 'components/Spinner';
 import { formatReal } from 'utils/formatReal';
-
-type Product = {
-    amount: number;
-    category_id: number;
-    created_at: string;
-    description: string;
-    id: number;
-    img_url: string;
-    name: string;
-    price: number;
-    user_id: string;
-};
+import { Product } from 'types/types';
 
 const Products = () => {
     const { addToast } = useToasts();

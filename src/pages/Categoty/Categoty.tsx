@@ -8,13 +8,7 @@ import { FiEdit } from 'react-icons/fi';
 import { RiDeleteBin2Line, RiAddFill } from 'react-icons/ri';
 import Spinner from 'components/Spinner';
 import Modal from 'components/Modal';
-
-type Category = {
-    created_at: Date;
-    id: number;
-    name: string;
-    user_id: string;
-};
+import { Category } from 'types/types';
 
 const Categoty = () => {
     const { addToast } = useToasts();

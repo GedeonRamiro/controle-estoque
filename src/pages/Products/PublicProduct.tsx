@@ -7,28 +7,10 @@ import { AiOutlineWhatsApp } from 'react-icons/ai';
 import React from 'react';
 import Modal from '../../components/Modal';
 import { formatReal } from 'utils/formatReal';
+import { Category, Product } from 'types/types';
 
 type ParamsId = {
     id: string;
-};
-
-type Product = {
-    amount: number;
-    category_id: number;
-    created_at: string;
-    description: string;
-    id: number;
-    img_url: string;
-    name: string;
-    price: number;
-    user_id: string;
-};
-
-type Category = {
-    created_at: Date;
-    id: number;
-    name: string;
-    user_id: string;
 };
 
 type Config = {

@@ -11,6 +11,7 @@ import { supabase } from 'services/supabase';
 import { FaUpload } from 'react-icons/fa';
 import { v4 as uuidv4 } from 'uuid';
 import ButtonFormAction from 'components/ButtonFormAction/ButtonFormAction';
+import { Category } from 'types/types';
 
 type LocationState = {
     amount: number;
@@ -32,13 +33,6 @@ type Inputs = {
     amount: number;
     price: number;
     category_id: number;
-};
-
-type Category = {
-    created_at: Date;
-    id: number;
-    name: string;
-    user_id: string;
 };
 
 const schema = yup
