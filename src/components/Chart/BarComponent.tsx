@@ -52,7 +52,7 @@ const BarComponent = ({ dataChart }: Props) => {
             },
             title: {
                 display: true,
-                text: 'Chart.js Bar Chart',
+                text: 'Maior e menor preço de produtos por categoria',
             },
         },
     };
