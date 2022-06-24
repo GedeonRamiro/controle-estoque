@@ -51,7 +51,7 @@ const DoughnutComponent = ({ dataChart }: Props) => {
             },
             title: {
                 display: true,
-                text: 'Chart.js Bar Chart',
+                text: 'Quantidades de produtos por categoria',
             },
         },
     };
