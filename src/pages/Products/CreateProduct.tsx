@@ -117,7 +117,7 @@ const CreateProduct = () => {
             setLoading(false);
             return addToast(error.message, { appearance: 'error', autoDismiss: true });
         } else {
-            addToast('Categoria criada com sucesso!', { appearance: 'success', autoDismiss: true });
+            addToast('Produto criado com sucesso!', { appearance: 'success', autoDismiss: true });
             reset({ name: '' });
             navigate('/produtos');
         }
