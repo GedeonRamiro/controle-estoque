@@ -266,7 +266,7 @@ const CreateProduct = () => {
                 </label>
                 <div className='mb-3 form-floating '>
                     <input
-                        type='text'
+                        type='number'
                         {...register('amount')}
                         onChange={(event) => setAmount(event.target.value)}
                         value={amount}
