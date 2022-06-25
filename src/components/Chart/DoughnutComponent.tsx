@@ -51,7 +51,7 @@ const DoughnutComponent = ({ dataChart }: Props) => {
             },
             title: {
                 display: true,
-                text: 'Quantidades de produtos por categoria',
+                text: 'Quantidade de produtos por categoria',
             },
         },
     };
