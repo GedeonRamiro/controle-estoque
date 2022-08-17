@@ -123,7 +123,7 @@ const ConfigStore = () => {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [auth, loading]);
+    }, [auth]);
 
     return (
         <Header>
@@ -202,7 +202,7 @@ const ConfigStore = () => {
                         </label>
                     </div>
 
-                    <ButtonFormAction link={'/configuracoes'} state={configDB} loading={!loading} />
+                    <ButtonFormAction link={'/'} state={configDB} loading={!loading} />
                 </form>
             )}
             {!loading && (
